@@ -14,5 +14,6 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+//= require chat
 //= require websocket_rails/main
 

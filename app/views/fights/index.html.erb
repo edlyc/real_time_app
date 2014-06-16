@@ -1,28 +1,7 @@
-<div id="chat"></div>
+<ul id="chat"></ul>
 
 <form id="form" action="#" method="post" style="position: absolute; bottom: 0">
   <input type="text" id="message">
   <input type="submit" value="Send message">
 </form>
 
-<script>
-  $(function() {
-    var dispatcher = new WebSocketRails('localhost:3000/websocket'); // pull host dynamically
-
-    dispatcher.on_open = function(connID) {
-      console.log('Connection has been established: ', connID);
-    };
-
-    dispatcher.bind("chat.message", function(message) {
-      $("#chat").append(message);
-    });
-
-    $("#form").on("submit", function( evt ) {
-      evt.preventDefault();
-
-      var message = $("#message").val();
-      dispatcher.trigger("chat.message", message);
-      this.reset();
-    });
-  });
-</script>
