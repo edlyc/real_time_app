@@ -7,7 +7,7 @@ $(function() {
   };
 
   dispatcher.bind("chat.message", function(message) {
-    $("#chat").append(userName + ':' + '<li>' + message + '</li>');
+    $("#chat").append('<li>' + userName + ':' + message + '</li>');
   });
 
   $("#form").on("submit", function( evt ) {
