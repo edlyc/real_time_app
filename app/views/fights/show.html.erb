@@ -40,3 +40,27 @@
   </label>
 </fieldset>
 
+<script>
+  $(function() {
+    // Get hostname & open a websocket
+    var host = location.host;
+    var dispatcher = new WebSocketRails( host + "/websocket" );
+
+    // Get room ID and subscribe to the channel
+    var roomID = location.pathname.split( "/fights/" )[1];
+    var game = dispatcher.subscribe_private( roomID );
+
+    game.bind( "ready", function() {
+      console.log( "Both players are ready to play." );
+    });
+
+    dispatcher.on_open = function(data) {
+      console.log( "Connection has been established: ", data);
+    };
+
+    game.on_success = function() {
+      console.log( "You have successfully joined the game.");
+    };
+
+  });
+</script>
