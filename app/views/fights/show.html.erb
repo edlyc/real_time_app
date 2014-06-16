@@ -1,19 +1,5 @@
 <h1>Welcome to the Pokemon Game</h1>
 
-<fieldset class="">
-  <legend>Choose your pokemon</legend>
-  <ul>
-    Name:
-    <input type="text" name="name" id="name" readonly="readonly">
-    Health:
-    <input type="text" name="health" id="health" readonly="readonly">
-    Attack:
-    <input type="text" name="attack" id="attack" readonly="readonly">
-    <input type="submit" class="submit" value="Attack">
-  </ul>
-</fieldset>
-
-
 <fieldset>
   <legend id="pokemon-1-legend">Pokemon 1</legend>
   <label>
@@ -23,7 +9,7 @@
     <input type="text" name="health" id="pokemon-1-health" readonly="readonly">
     Attack:
     <input type="text" name="attack" id="pokemon-1-attack" readonly="readonly">
-    <input type="submit" class="submit" value="Attack">
+    <button type="submit" class="submit" id="attack">Attack</button>
   </label>
 </fieldset>
 
@@ -36,40 +22,27 @@
     <input type="text" name="health" id="pokemon-2-health" readonly="readonly">
     Attack:
     <input type="text" name="attack" id="pokemon-2-attack" readonly="readonly">
-    <input type="submit" class="submit" value="Attack">
   </label>
 </fieldset>
 
 <script>
+  $(document).ready(function() {
+    var pokemonList = Pokemon.prototype.pokemonList;
+
+    for ( var i = 0; i < 2; i++ ) {
+      var pokemon = pokemonList[i];
+      var id = i + 1;
+
+      $( "#pokemon-" + id + "-legend" ).text( pokemon.name );
+      $( "#pokemon-" + id + "-name" ).val( pokemon.name );
+      $( "#pokemon-" + id + "-health" ).val( pokemon.health );
+      $( "#pokemon-" + id + "-attack" ).val( pokemon.attackStat );
+    }
+  });
+</script>
+
+<script>
   $(function() {
-    var self;     // connection ID of user
-    var opponent; // connection ID of opponent
-
-    // Get hostname & open a websocket
-    var host = location.host;
-    var dispatcher = new WebSocketRails( host + "/websocket" );
-
-    // Get room ID and subscribe to the channel
-    var roomID = location.pathname.split( "/fights/" )[1];
-    var game = dispatcher.subscribe_private( roomID );
-
-    // When both players have joined the battle
-    // Get the opponent's ID
-    game.bind( "ready", function( data ) {
-      opponent = data[0] === self ? data[1] : data[0];
-      console.log( "This is my opponent: " + opponent );
-      console.log( "Both players are ready to play." );
-    });
-
-    dispatcher.on_open = function( data ) {
-      self = data.connection_id;
-      console.log( "Connection has been established: ", self );
-    };
-
-    game.on_success = function( data ) {
-      console.log( "You have successfully joined the game.");
-
-    };
-
+    var player = new Player();
   });
 </script>
