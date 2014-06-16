@@ -35,6 +35,7 @@ gem "pg", "0.17.1"                    # for Heroku deployment
 gem "password_strength", "0.4.1"      # adds password strength validation
 gem "bootstrap-sass", "3.1.1.1"       # custom css with Bootstrap
 gem "sprockets", "2.11.0"             # helps manage asset pipeline with Bootstrap
+gem "websocket-rails"
 
 group :doc do
   gem "sdoc", "0.4.0"
