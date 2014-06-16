@@ -1,5 +1,6 @@
 WebsocketRails::EventMap.describe do
   namespace :chat do
+    subscribe :new_user, "chat#new_user"
     subscribe :message, "chat#message"
   end
 
