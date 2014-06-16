@@ -14,28 +14,28 @@
 </fieldset>
 
 
-<fieldset class="1">
-  <legend>Pokemon 1</legend>
+<fieldset>
+  <legend id="pokemon-1-legend">Pokemon 1</legend>
   <label>
     Name:
-    <input type="text" name="name" id="name" readonly="readonly">
+    <input type="text" name="name" id="pokemon-1-name" readonly="readonly">
     Health:
-    <input type="text" name="health" id="health" readonly="readonly">
+    <input type="text" name="health" id="pokemon-1-health" readonly="readonly">
     Attack:
-    <input type="text" name="attack" id="attack" readonly="readonly">
+    <input type="text" name="attack" id="pokemon-1-attack" readonly="readonly">
     <input type="submit" class="submit" value="Attack">
   </label>
 </fieldset>
 
-<fieldset class="2">
-  <legend>Pokemon 2</legend>
+<fieldset>
+  <legend id="pokemon-2-legend">Pokemon 2</legend>
   <label>
     Name:
-    <input type="text" name="name" id="name" readonly="readonly">
+    <input type="text" name="name" id="pokemon-2-name" readonly="readonly">
     Health:
-    <input type="text" name="health" id="health" readonly="readonly">
+    <input type="text" name="health" id="pokemon-2-health" readonly="readonly">
     Attack:
-    <input type="text" name="attack" id="attack" readonly="readonly">
+    <input type="text" name="attack" id="pokemon-2-attack" readonly="readonly">
     <input type="submit" class="submit" value="Attack">
   </label>
 </fieldset>
@@ -53,6 +53,8 @@
     var roomID = location.pathname.split( "/fights/" )[1];
     var game = dispatcher.subscribe_private( roomID );
 
+    // When both players have joined the battle
+    // Get the opponent's ID
     game.bind( "ready", function( data ) {
       opponent = data[0] === self ? data[1] : data[0];
       console.log( "This is my opponent: " + opponent );

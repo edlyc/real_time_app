@@ -36,16 +36,16 @@ var pokemon4 = new Pokemon("Richurtle", 80, 5);
 
 $(document).ready(function() {
 
+  var pokemonList = [pokemon1, pokemon2];
 
-  $("legend").closest(".1").find("legend").text(pokemon1.name);
-  $("legend").closest(".1").find("#name").val(pokemon1.name);
-  $("legend").closest(".1").find("#health").val(pokemon1.health);
-  $("legend").closest(".1").find("#attack").val(pokemon1.stats);
+  for ( var i = 0; i < 2; i++ ) {
+    var pokemon = pokemonList[i];
 
-  $("legend").closest(".2").find("legend").text(pokemon2.name);
-  $("legend").closest(".2").find("#name").val(pokemon2.name);
-  $("legend").closest(".2").find("#health").val(pokemon2.health);
-  $("legend").closest(".2").find("#attack").val(pokemon2.stats);
+    $("#pokemon-" + (i + 1) + "-legend").text(pokemon.name);
+    $("#pokemon-" + (i + 1) + "-name").val(pokemon.name);
+    $("#pokemon-" + (i + 1) + "-health").val(pokemon.health);
+    $("#pokemon-" + (i + 1) + "-attack").val(pokemon.stats);
+  }
 
   $(".1").on("click", ".submit", function(evt) {
     evt.stopPropagation();
