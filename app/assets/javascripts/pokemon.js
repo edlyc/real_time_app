@@ -5,19 +5,12 @@ function Pokemon(name, health, stats) {
 }
 
 Pokemon.prototype = {
-  // function addCooldown(opponent, attack){
-  //   opponent.cooldown +=
-  // }
   attack: function(opponent) {
-    // opponent.health -= this.moves.move.power;
     if (this.health >= 0 && opponent.health >= 0) {
-      opponent.health -= this.stats;
-      if (opponent.health <= 0) {
-        opponent.health = 0;
-      };
-      update();
-      check();
-    };
+
+      // If damage would take opponent below 0, only take the opponent's health to 0.
+      opponent.health -= this.stats > opponent.health ? opponent.health : this.stats;
+    }
   }
 };
 
@@ -27,19 +20,19 @@ var pokemon3 = new Pokemon("Pikachu", 45, 15);
 var pokemon4 = new Pokemon("Richurtle", 80, 5);
 
 
-function check() {
+// function check() {
 
-  if (pokemon1.health <= 0) {
-    alert(pokemon2.name + ' wins!');
-  } else if (pokemon2.health <= 0) {
-    alert(pokemon1.name + ' wins!');
-  }
-};
+//   if (pokemon1.health <= 0) {
+//     alert(pokemon2.name + ' wins!');
+//   } else if (pokemon2.health <= 0) {
+//     alert(pokemon1.name + ' wins!');
+//   }
+// };
 
-function update() {
-  $("legend").closest(".1").find("#health").val(pokemon1.health);
-  $("legend").closest(".2").find("#health").val(pokemon2.health);
-};
+// function update() {
+//   $("legend").closest(".1").find("#health").val(pokemon1.health);
+//   $("legend").closest(".2").find("#health").val(pokemon2.health);
+// };
 
 $(document).ready(function() {
 

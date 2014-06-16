@@ -42,6 +42,9 @@
 
 <script>
   $(function() {
+    var self;     // connection ID of user
+    var opponent; // connection ID of opponent
+
     // Get hostname & open a websocket
     var host = location.host;
     var dispatcher = new WebSocketRails( host + "/websocket" );
@@ -50,16 +53,20 @@
     var roomID = location.pathname.split( "/fights/" )[1];
     var game = dispatcher.subscribe_private( roomID );
 
-    game.bind( "ready", function() {
+    game.bind( "ready", function( data ) {
+      opponent = data[0] === self ? data[1] : data[0];
+      console.log( "This is my opponent: " + opponent );
       console.log( "Both players are ready to play." );
     });
 
-    dispatcher.on_open = function(data) {
-      console.log( "Connection has been established: ", data);
+    dispatcher.on_open = function( data ) {
+      self = data.connection_id;
+      console.log( "Connection has been established: ", self );
     };
 
-    game.on_success = function() {
+    game.on_success = function( data ) {
       console.log( "You have successfully joined the game.");
+
     };
 
   });
