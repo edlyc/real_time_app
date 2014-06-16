@@ -10,14 +10,21 @@ Pokemon.prototype = {
   // }
   attack: function(opponent) {
     // opponent.health -= this.moves.move.power;
-    opponent.health -= this.stats;
-    update();
-    check();
+    if (this.health >= 0 && opponent.health >= 0) {
+      opponent.health -= this.stats;
+      if (opponent.health <= 0) {
+        opponent.health = 0;
+      };
+      update();
+      check();
+    };
   }
 };
 
 var pokemon1 = new Pokemon("Bulbasaur", 40, 15);
 var pokemon2 = new Pokemon("Charmander", 50, 12);
+var pokemon3 = new Pokemon("Pikachu", 45, 15);
+var pokemon4 = new Pokemon("Richurtle", 80, 5);
 
 
 function check() {
