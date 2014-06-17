@@ -15,13 +15,13 @@ class Pokemon
     # 5% chance to do double damage
     # Most of the time, deals between 75 and 100% damage
     case hit_roll
-    when 0..4
+    when 0
       return 0
-    when 5..14
+    when 19
+      return attack_stat * 2
+    else
       damage = attack_stat * (0.75 + rand() * 0.25)
       return damage.to_i
-    else
-      return attack_stat * 2
     end
   end
 
