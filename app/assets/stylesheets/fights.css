@@ -43,31 +43,31 @@
       z-index: 2
     }
 
-    #pookehealth {
+    .pokehealth {
     float: left;
     height: 100px;
     margin-right: 350px;
     }
 
-    #pookehealthbar {
+    .pokehealthbar {
       margin-bottom: 350px;
       margin-left: 50px;
     }
 
-  #pooke {
+  .poke {
     display: inline-block;
   }
-  #pooke img{
+  .poke img{
     position: absolute;
     width: 200px;
     z-index: 300;
   }
 
-  #otherpoke {
+  .otherpoke {
     display: inline-block;
   }
 
-  #otherpoke img{
+  .otherpoke img{
     position: absolute;
     width: 300px;
     z-index: 300;

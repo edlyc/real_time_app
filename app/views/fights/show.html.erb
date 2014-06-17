@@ -1,52 +1,53 @@
 <h1>Welcome to the Pokemon Game</h1>
 
 <div>
-  <div id="otherpoke" class="poke-box">
+  <div class="otherpoke poke-box">
     <%= image_tag("bulbasaur/bulba_back.gif") %>
+
     <div class="poke-deck"></div>
   </div>
 
-  <div id="otherhealth" class="health">
-    <progress id="otherhealthbar" value="100" max="100"></progress>
+  <div class="otherhealth health">
+    <progress class="otherhealthbar" value="100" max="100"></progress>
   </div>
-  <button id="poo3">Tackle</button>
+  <button class="attack">Tackle</button>
 
 
-  <div id="pooke" class="poke-box">
+  <div class="poke poke-box">
     <%= image_tag("bulbasaur/bulba_still.gif") %>
   </div>
 
-  <div id="pookehealth" class="health">
-    <progress id="pookehealthbar" value="100" max="100"></progress>
+  <div class="pokehealth health">
+    <progress class="pookehealthbar" value="100" max="100"></progress>
   </div>
-  <button id="poo">Attack</button>
+  <button class="attacked">Attack</button>
 
-  <div id="music">
-    <%= audio_tag("audios/#{@song}", autoplay: true, controls: true, loop: true) %>
+  <div class="music">
+    <%= audio_tag("#{@song}", autoplay: true, controls: true) %>
   </div>
 
 <fieldset>
-  <legend id="pokemon-1-legend">Pokemon 1</legend>
+  <legend class="pokemon-1-legend">Pokemon 1</legend>
   <label>
     Name:
-    <input type="text" name="name" id="pokemon-1-name" readonly="readonly">
+    <input type="text" name="name" class="pokemon-1-name" readonly="readonly">
     Health:
-    <input type="text" name="health" id="pokemon-1-health" readonly="readonly">
+    <input type="text" name="health" class="pokemon-1-health" readonly="readonly">
     Attack:
-    <input type="text" name="attack" id="pokemon-1-attack" readonly="readonly">
-    <button type="submit" class="submit" id="attack">Attack</button>
+    <input type="text" name="attack" class="pokemon-1-attack" readonly="readonly">
+    <button type="submit" class="submit" class="attack">Attack</button>
   </label>
 </fieldset>
 
 <fieldset>
-  <legend id="pokemon-2-legend">Pokemon 2</legend>
+  <legend class="pokemon-2-legend">Pokemon 2</legend>
   <label>
     Name:
-    <input type="text" name="name" id="pokemon-2-name" readonly="readonly">
+    <input type="text" name="name" class="pokemon-2-name" readonly="readonly">
     Health:
-    <input type="text" name="health" id="pokemon-2-health" readonly="readonly">
+    <input type="text" name="health" class="pokemon-2-health" readonly="readonly">
     Attack:
-    <input type="text" name="attack" id="pokemon-2-attack" readonly="readonly">
+    <input type="text" name="attack" class="pokemon-2-attack" readonly="readonly">
   </label>
 </fieldset>
 
@@ -56,12 +57,12 @@
 
     for ( var i = 0; i < 2; i++ ) {
       var pokemon = pokemonList[i];
-      var id = i + 1;
+      var class = i + 1;
 
-      $( "#pokemon-" + id + "-legend" ).text( pokemon.name );
-      $( "#pokemon-" + id + "-name" ).val( pokemon.name );
-      $( "#pokemon-" + id + "-health" ).val( pokemon.health );
-      $( "#pokemon-" + id + "-attack" ).val( pokemon.attackStat );
+      $( "#pokemon-" + class + "-legend" ).text( pokemon.name );
+      $( "#pokemon-" + class + "-name" ).val( pokemon.name );
+      $( "#pokemon-" + class + "-health" ).val( pokemon.health );
+      $( "#pokemon-" + class + "-attack" ).val( pokemon.attackStat );
     }
   });
 </script>
