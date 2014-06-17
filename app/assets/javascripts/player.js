@@ -1,5 +1,9 @@
 function Player() {
-  this.pokemon = new Pokemon( Pokemon.prototype.pokemonList[0] );
+  // Currently can only play Bulbasaur right now
+  // In the future, will build in a pokemon selection feature
+  var bulbasaur = Pokemon.prototype.pokemonList[0];
+  this.pokemon = new Pokemon( bulbasaur );
+
   this.initialize();
 }
 
@@ -15,7 +19,7 @@ Player.prototype = {
       instance.playerID = instance.getConnection( data );
     };
 
-    // Subscribe to a private game channel
+    // Set private game channel
     this.game = this.subscribeRoom();
 
     // When game is ready to begin...
@@ -23,7 +27,7 @@ Player.prototype = {
       // Set opponent ID
       instance.opponentID = instance.getOpponent( data );
 
-      // Ensure both players are at full health;
+      // Ensure both players are in a clean initial state
       instance.reset();
     });
 
@@ -88,6 +92,7 @@ Player.prototype = {
     console.log( "You have successfully joined the game.");
   },
   reset: function() {
+    // Set pokemon's health to full health
     this.pokemon.health = this.pokemon.maxHealth;
   }
 };
