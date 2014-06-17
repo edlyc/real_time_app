@@ -1,5 +1,29 @@
 <h1>Welcome to the Pokemon Game</h1>
 
+<div>
+  <div id="otherpoke" class="poke-box">
+    <%= image_tag("bulbasaur/bulba_back.gif") %>
+    <div class="poke-deck"></div>
+  </div>
+
+  <div id="otherhealth" class="health">
+    <progress id="otherhealthbar" value="100" max="100"></progress>
+  </div>
+  <button id="poo3">Tackle</button>
+
+
+  <div id="pooke" class="poke-box">
+    <%= image_tag("bulbasaur/bulba_still.gif") %>
+  </div>
+
+  <div id="pookehealth" class="health">
+    <progress id="pookehealthbar" value="100" max="100"></progress>
+  </div>
+  <button id="poo">Attack</button>
+
+  <div id="music">
+  </div>
+
 <fieldset>
   <legend id="pokemon-1-legend">Pokemon 1</legend>
   <label>
@@ -46,3 +70,5 @@
     var player = new Player();
   });
 </script>
+
+<%= javascript_include_tag "fights/battle_view" %>

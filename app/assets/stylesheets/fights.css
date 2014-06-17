@@ -1,0 +1,78 @@
+  #arena {
+    background: black;
+    height: 40%;
+    max-height: 400px;
+    max-width: 1000px;
+    width: 80%;
+    z-index: 1;
+  }
+
+    .poke-deck {
+      animation-duration: 3s;
+      animation-name: slidein;
+      background: #4679BD;
+      -moz-border-radius: 70%;
+      -webkit-border-radius: 70%;
+      border-radius: 70%;
+      max-width: 200px;
+      padding-bottom: 4%;
+      position: absolute;
+      width: 50%;
+      z-index: 10;
+      top: 126px;
+    }
+
+    @keyframes slidein {
+      from {
+        margin-left: 100%;
+        width: 300%;
+      }
+
+      to {
+        margin-left: 0%;
+        width: 100%;
+      }
+    }
+
+
+    .poke-box {
+      background: url('edDfRAC.jpg') no-repeat;
+      float: left;
+      height: 200px;
+      width: 200px;
+      z-index: 2
+    }
+
+    #pookehealth {
+    float: left;
+    height: 100px;
+    margin-right: 350px;
+    }
+
+    #pookehealthbar {
+      margin-bottom: 350px;
+      margin-left: 50px;
+    }
+
+  #pooke {
+    display: inline-block;
+  }
+  #pooke img{
+    position: absolute;
+    width: 200px;
+    z-index: 300;
+  }
+
+  #otherpoke {
+    display: inline-block;
+  }
+
+  #otherpoke img{
+    position: absolute;
+    width: 300px;
+    z-index: 300;
+  }
+
+.health {
+  z-index: 500;
+}
