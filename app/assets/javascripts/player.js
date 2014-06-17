@@ -22,12 +22,19 @@ Player.prototype = {
       console.log( "The game has begun." );
     });
 
-    // Listen for damage_dealt event
+    // Listen for damage_dealt event & send message to server to update pokemon's health
     this.game.bind( "damage_dealt", function( data ) {
       if ( data.opponent === instance.playerID ) {
         var game_name = instance.game.name;
         instance.dispatcher.trigger( "game.receive_damage", { game: game_name, damage: data.damage });
       }
+    });
+
+    // Listen for update view event & update pokemon's health in view
+    this.game.bind( "update_game", function( data ) {
+      // Hardcoded health bar -- should change when possible as now the player implementation is coupled to the view
+      var updateTarget = data.player === player.playerID ? ".otherhealthbar" : ".pookehealthbar";
+      $( updateTarget ).val( data.health / data.max_health * 100 );
     });
 
     // Listen for game over event
@@ -42,7 +49,7 @@ Player.prototype = {
     });
 
     // Bind attack buttons to send attack messages
-    $( "#attack" ).on( "click", function() {
+    $( ".attack" ).on( "click", function() {
       var game_name = instance.game.name;
       instance.dispatcher.trigger( "game.attack", { game: game_name });
     });
