@@ -7,4 +7,6 @@ WebsocketRails::EventMap.describe do
   namespace :websocket_rails do
     subscribe :subscribe_private, "game#join"
   end
+
+  subscribe :client_disconnected, "chat#delete_user"
 end

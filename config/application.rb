@@ -16,5 +16,7 @@ Bundler.require(*Rails.groups)
 module RealTimeApp
   class Application < Rails::Application
     Rails.application.config.assets.precompile += %w( fights/chat.js )
+    config.cache_store = :redis_store, 'redis://localhost:6379/0/cache', { expires_in: 90.minutes }
   end
 end
+

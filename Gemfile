@@ -36,7 +36,7 @@ gem "password_strength", "0.4.1"      # adds password strength validation
 gem "bootstrap-sass", "3.1.1.1"       # custom css with Bootstrap
 gem "sprockets", "2.11.0"             # helps manage asset pipeline with Bootstrap
 gem "websocket-rails"                 # real-time web experience with rails
-gem 'redis' "3.1.0"                   # key-value persistent storage
+gem 'redis-rails'                  # key-value persistent storage
 
 group :doc do
   gem "sdoc", "0.4.0"

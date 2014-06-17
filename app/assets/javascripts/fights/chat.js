@@ -3,10 +3,7 @@ $(function() {
   var userName = ''
 
   dispatcher.on_open = function(connID) {
-    userName = connID.connection_id;
-  var userName = '';
-
-  dispatcher.on_open = function(connID) {
+    dispatcher.subscribe('lobby');
     userName = connID.connection_id;
 
     dispatcher.bind("chat.new_user", function(new_user){
@@ -16,6 +13,10 @@ $(function() {
 
     dispatcher.trigger('chat.new_user', userName);
   };
+
+  dispatcher.bind("chat.current_users", function(current_users){
+    debugger
+  });
 
   dispatcher.bind("chat.message", function(message) {
     $("#chat").append('<li>' + message.userName + ' :    ' + message.message + '</li>');
