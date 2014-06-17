@@ -4,6 +4,11 @@ WebsocketRails::EventMap.describe do
     subscribe :message, "chat#message"
   end
 
+  namespace :game do
+    subscribe :attack, "game#attack"
+    subscribe :receive_damage, "game#receive_damage"
+  end
+
   namespace :websocket_rails do
     subscribe :subscribe_private, "game#join"
   end

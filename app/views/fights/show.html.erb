@@ -52,22 +52,6 @@
 </fieldset>
 
 <script>
-  $(document).ready(function() {
-    var pokemonList = Pokemon.prototype.pokemonList;
-
-    for ( var i = 0; i < 2; i++ ) {
-      var pokemon = pokemonList[i];
-      var class = i + 1;
-
-      $( "#pokemon-" + class + "-legend" ).text( pokemon.name );
-      $( "#pokemon-" + class + "-name" ).val( pokemon.name );
-      $( "#pokemon-" + class + "-health" ).val( pokemon.health );
-      $( "#pokemon-" + class + "-attack" ).val( pokemon.attackStat );
-    }
-  });
-</script>
-
-<script>
   $(function() {
     var player = new Player();
   });

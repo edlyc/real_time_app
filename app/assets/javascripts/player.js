@@ -1,9 +1,4 @@
 function Player() {
-  // Currently can only play Bulbasaur right now
-  // In the future, will build in a pokemon selection feature
-  var bulbasaur = Pokemon.prototype.pokemonList[0];
-  this.pokemon = new Pokemon( bulbasaur );
-
   this.initialize();
 }
 
@@ -23,41 +18,33 @@ Player.prototype = {
     this.game = this.subscribeRoom();
 
     // When game is ready to begin...
-    this.game.bind( "ready", function( data ) {
-      // Set opponent ID
-      instance.opponentID = instance.getOpponent( data );
-
-      // Ensure both players are in a clean initial state
-      instance.reset();
+    this.game.bind( "start_game", function( data ) {
+      console.log( "The game has begun." );
     });
 
-    // Listen for attacks
-    this.game.bind( "attack", function( data ) {
+    // Listen for damage_dealt event
+    this.game.bind( "damage_dealt", function( data ) {
       if ( data.opponent === instance.playerID ) {
-        instance.pokemon.receiveDamage( data.damage );
-
-        // If Pokemon dies, end the game
-        if ( instance.pokemon.health <= 0 ) {
-          instance.game.trigger( "gameover", { winner: instance.opponentID });
-        }
+        var game_name = instance.game.name;
+        instance.dispatcher.trigger( "game.receive_damage", { game: game_name, damage: data.damage });
       }
     });
 
     // Listen for game over event
-    this.game.bind( "gameover", function( data ){
+    this.game.bind( "end_game", function( data ){
       instance.dispatcher.unsubscribe( instance.game.name );
 
-      if ( data.winner === instance.playerID ) {
-        console.log( "You win!" );
-      } else {
+      if ( data.loser === instance.playerID ) {
         console.log( "You lost!" );
+      } else {
+        console.log( "You win!" );
       }
     });
 
     // Bind attack buttons to send attack messages
     $( "#attack" ).on( "click", function() {
-      var damage = instance.pokemon.attack();
-      instance.game.trigger( "attack", { opponent: instance.opponentID, damage: damage });
+      var game_name = instance.game.name;
+      instance.dispatcher.trigger( "game.attack", { game: game_name });
     });
 
     this.game.on_success = this.alertJoin;
@@ -90,9 +77,5 @@ Player.prototype = {
   },
   alertJoin: function() {
     console.log( "You have successfully joined the game.");
-  },
-  reset: function() {
-    // Set pokemon's health to full health
-    this.pokemon.health = this.pokemon.maxHealth;
   }
 };
