@@ -19,9 +19,4 @@ $('document').ready(function(){
       otherhealth.val(otherhealth.val() - 15);
     }, 500);
   });
-
-  var musics = ['pokemusic.mp3', 'pokemusic2.mp3']
-  var randomSong = musics[Math.floor(Math.random()*musics.length)];
-
-  $('#music').html('<audio src="/assets/audios/' + randomSong + '" loop="loop" autoplay="autoplay" controls="controls"></audio>')
 });
