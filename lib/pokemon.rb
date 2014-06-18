@@ -8,9 +8,9 @@ class Pokemon
     @attack_stat = attributes[:attack_stat]
   end
 
-  def attack
+  def attack(type)
     hit_roll = rand(20)
-    
+
     # 5% chance to miss attack
     # 5% chance to do double damage
     # Most of the time, deals between 75 and 100% damage

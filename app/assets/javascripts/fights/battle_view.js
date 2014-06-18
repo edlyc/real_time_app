@@ -23,6 +23,16 @@
 function BattleView() {}
 
 BattleView.prototype = {
+  updateView: function( data ) {
+    this.updateHealthBar( data );
+
+    // Attack animations have a naming convention
+    // For an attack called 'foobar'
+    // The method will be 'foobarAnimate'
+    // convention over configuration
+    var attackMethod = this[data.attackType + 'Animate'];
+    attackMethod();
+  },
   myPokemonFaints: function(){
     var $mypokemon = $('.my-pokemon img');
     $mypokemon.toggleClass('animated fadeOutDown');
@@ -34,5 +44,8 @@ BattleView.prototype = {
   updateHealthBar: function(data){
     var updateTarget = data.targetIsSelf ? ".my-healthbar" : ".their-healthbar";
     $( updateTarget ).val( data.health / data.maxHealth * 100 );
+  },
+  tackleAnimate: function(){
+
   }
 };

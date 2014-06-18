@@ -27,7 +27,7 @@ Player.prototype = {
     this.game.bind( "damage_dealt", function( data ) {
       if ( data.opponent === instance.playerID ) {
         var game_name = instance.game.name;
-        instance.dispatcher.trigger( "game.receive_damage", { game: game_name, damage: data.damage });
+        instance.dispatcher.trigger( "game.receive_damage", { game: game_name, damage: data.damage, attack_type: data.attack_type });
       }
     });
 
@@ -35,7 +35,12 @@ Player.prototype = {
     this.game.bind( "update_game", function( data ) {
       // Hardcoded health bar -- should change when possible as now the player implementation is coupled to the view
       var targetIsSelf = data.player === player.playerID;
-      instance.view.updateHealthBar({ targetIsSelf: targetIsSelf, health: data.health, maxHealth: data.max_health });
+      instance.view.updateView({
+        targetIsSelf: targetIsSelf,
+        health: data.health,
+        maxHealth: data.max_health,
+        attackType: data.attack_type
+      });
     });
 
     // Listen for game over event
@@ -53,8 +58,12 @@ Player.prototype = {
 
     // Bind attack buttons to send attack messages
     $( ".attack" ).on( "click", function() {
-      var game_name = instance.game.name;
-      instance.dispatcher.trigger( "game.attack", { game: game_name });
+      var gameName = instance.game.name;
+      var attack_type = $(this).data( 'attack-type' );
+      instance.dispatcher.trigger( "game.attack", {
+        game: gameName,
+        attack_type: attack_type
+      });
     });
 
     this.game.on_success = this.alertJoin;
