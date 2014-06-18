@@ -34,6 +34,12 @@ button {
 
   }
 
+  .screen {
+    display: block;
+    overflow: auto;
+    width: 100%;
+  }
+
   .banner {
     background: black;
     display: block;
@@ -44,9 +50,8 @@ button {
   }
 
   .stats {
-    margin: 40px 20px;
-    position: absolute;
-    width: 30%;
+    margin: 0;
+    width: 50%;
   }
 
   .stats-outer {
@@ -63,6 +68,32 @@ button {
     height: 102px;
     margin: 2px;
     padding: 2px;
+  }
+
+    .my-stats {
+      float: left;
+      overflow: auto;
+    }
+
+    .their-stats {
+      float: right;
+      overflow: auto;
+    }
+
+  .my-pokemon {
+
+    img {
+      width: 350px;
+    }
+
+  }
+
+  .their-pokemon {
+
+    img {
+      width: 200px;
+    }
+
   }
 
   .console {
