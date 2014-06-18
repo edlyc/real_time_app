@@ -1,7 +1,12 @@
 WebsocketRails::EventMap.describe do
   namespace :chat do
     subscribe :new_user, "chat#new_user"
+<<<<<<< HEAD
     subscribe :update_users, "chat#update_users"
+=======
+    subscribe :message, "chat#message"
+    subscribe :update_users, "chat#get_users"
+>>>>>>> working challenge capabilities
     subscribe :challenge, "chat#challenge"
     subscribe :accept_challenge, "chat#accept_challenge"
   end

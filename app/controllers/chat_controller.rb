@@ -3,25 +3,6 @@ class ChatController < WebsocketRails::BaseController
   def initialize_session
   end
 
-  def accept_challenge
-    current_user = WebsocketRails["lobby"].subscribers.find do |conn|
-      conn.id == data[:current_user]
-    end
-
-    rand_num = rand(1_000_000)
-    game = WebsocketRails["#{rand_num}"]
-    game.make_private
-
-
-    current_user.send_message :new_game, game.name, :namespace => 'game'
-    send_message :new_game, game.name, :namespace => 'game'
-  end
-
-  def new_user
-    save_user data
-    update_users
-  end
-
   # Updates everybody's user list in the lobby
   def update_users
     lobby = WebsocketRails["lobby"]
@@ -58,11 +39,12 @@ class ChatController < WebsocketRails::BaseController
 
   private
   # Saves user to Redis, so we can pull a list of current users in the lobby
-  def save_user( user )
-    $redis.rpush("lobby_users", user[:id])
-    $redis.hset("user:#{user[:id]}", "username", user[:username])
+  def save_user(data)
+    $redis.rpush("lobby_users", data[:id])
+    $redis.hset("user:#{data[:id]}", "username", data[:username])
   end
 
+  # Gets current lobby users (id and username) from Redis
   def get_current_users
     users = $redis.lrange("lobby_users", 0, -1)
     users.map do |user_id|
