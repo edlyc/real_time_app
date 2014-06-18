@@ -1,7 +1,8 @@
 class ChatController < WebsocketRails::BaseController
+  @@lobby_room = "lobby"            # Websocket channel name for the lobby
+  @@lobby_users = "lobby_users"     # Redis field for lobby users
 
   def initialize_session
-    # clear_lobby
   end
 
   # Saves user to the database and updates user views for everyone in the lobby
@@ -12,7 +13,7 @@ class ChatController < WebsocketRails::BaseController
 
   # Updates everybody's user list in the lobby
   def update_users
-    lobby = WebsocketRails["lobby"]
+    lobby = WebsocketRails[@@lobby_room]
     users = get_current_users
     lobby.trigger :update_users, users
   end
@@ -38,20 +39,20 @@ class ChatController < WebsocketRails::BaseController
 
   def delete_user
     connection_id = connection.id
-    $redis.lrem("lobby_users", 0, connection_id)
+    $redis.lrem(@@lobby_users, 0, connection_id)
     update_users
   end
 
   private
   # Saves user to Redis, so we can pull a list of current users in the lobby
   def save_user(data)
-    $redis.rpush("lobby_users", data[:id])
+    $redis.rpush(@@lobby_users, data[:id])
     $redis.hset("user:#{data[:id]}", "username", data[:username])
   end
 
   # Gets current lobby users (id and username) from Redis
   def get_current_users
-    users = $redis.lrange("lobby_users", 0, -1)
+    users = $redis.lrange(@@lobby_users, 0, -1)
     users.map do |user_id|
       username = $redis.hget("user:#{user_id}", "username")
       { id: user_id, username: username }
@@ -60,11 +61,7 @@ class ChatController < WebsocketRails::BaseController
 
   # Finds the user connection based on ID
   def find_lobby_user(id)
-    lobby_users = WebsocketRails["lobby"].subscribers
+    lobby_users = WebsocketRails[@@lobby_room].subscribers
     lobby_users.find { |conn| conn.id == id }
-  end
-
-  def clear_lobby
-    $redis.del("lobby_users")
   end
 end
