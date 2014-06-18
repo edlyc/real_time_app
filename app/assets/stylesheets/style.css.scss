@@ -17,18 +17,18 @@ button {
   }
 
   .inner {
-    background: white;
+    background: url('http://i.imgur.com/m5vMnP3.png') no-repeat;
+    background-size: cover;
     display: block;
     height: 100%;
     margin: 20px auto 20px;
-    min-height: 600px;
+    min-height: 500px;
     max-width: 800px;
     padding: 0;
     overflow: hidden;
     width: 80%;
 
     p {
-      font-size: 28px;
       margin: 15px 20px;
     }
 
@@ -64,18 +64,24 @@ button {
   .stats-inner {
     background: #6ea1a3;
     border-radius: 12px 14px;
-    color: white;
     height: 102px;
     margin: 2px;
     padding: 2px;
+
+    p {
+      color: white;
+      font-size: 14px;
+      line-height: 16px;
+      margin: 5px;
+    }
   }
 
     .my-stats {
-      float: right;
+      float: left;
     }
 
     .their-stats {
-      float: left;
+      float: right;
     }
 
   .my-pokemon {
@@ -92,7 +98,7 @@ button {
 
     img {
       display: block;
-      margin: 40px auto 40px auto;
+      margin: 40px auto 95px auto;
       width: 100px;
     }
 
@@ -102,6 +108,7 @@ button {
     background: #474057;
     bottom: 0;
     display: block;
+    font-size: 28px;
     height: 120px;
     margin: 0 auto;
     overflow: auto;

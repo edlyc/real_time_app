@@ -1,6 +1,5 @@
 
 <div class="screen">
-  <h1>Welcome to the Pokemon Game</h1>
   <!-- My Pokemon Stats  -->
   <div class="stats my-stats">
     <div class="stats-outer">
@@ -8,27 +7,31 @@
         <div class="my-health">
           <progress class="my-healthbar" value="100" max="100"></progress>
         </div>
-      </div>
-    </div>
-    <!-- Opponent Pokemon -->
-    <div class="pokemon their-pokemon">
-      <%= image_tag("bulbasaur/bulba_front_resize.gif") %>
-      <div class="poke-deck"></div>
-    </div>
-  </div>
-  <!-- Opponent Pokemon Stats -->
-  <div class="stats their-stats">
-    <div class="stats-outer">
-      <div class="stats-inner">
-        <div class="their-health">
-          <progress class="their-healthbar" value="100" max="100"></progress>
-        </div>
+        <p>Player 1</p>
+        <p>X Remaining</p>
       </div>
     </div>
     <!-- My Pokemon -->
     <div class="pokemon my-pokemon">
       <%= image_tag("bulbasaur/bulba_back_resize.gif") %>
       <div class="poke-deck"></div>
+    </div>
+  </div>
+  <!-- Opponent Pokemon Stats -->
+  <div class="stats their-stats">
+    <!-- Opponent Pokemon -->
+    <div class="pokemon their-pokemon">
+      <%= image_tag("bulbasaur/bulba_front_resize.gif") %>
+      <div class="poke-deck"></div>
+    </div>
+    <div class="stats-outer">
+      <div class="stats-inner">
+        <div class="their-health">
+          <progress class="their-healthbar" value="100" max="100"></progress>
+        </div>
+        <p>Player 2</p>
+        <p>Y Remaining</p>
+      </div>
     </div>
   </div>
   <!-- Bottom Console -->
