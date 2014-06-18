@@ -38,15 +38,15 @@ $(function() {
     lobby.bind( 'update_users', updateUsers );
     dispatcher.trigger( 'chat.update_users' );
 
+    // Listen for chat.message event
+    // Shows the chat message when someone sends a chat message to the lobby
+    lobby.bind( 'message', function( message ) {
+      $chat_messages.append( '<li>' + message.username + ':\t' + message.message + '</li>');
+    });
+
     // Set the connection ID
     connID = connection.connection_id; 
   };
-
-  // Listen for chat.message event
-  // Shows the chat message when someone sends a chat message to the lobby
-  lobby.bind( 'message', function( message ) {
-    $chat_messages.append( '<li>' + message.username + ':\t' + message.message + '</li>');
-  });
 
   // When a user submits a screen name
   $user_name_form.on( 'submit', function( evt ) {
@@ -82,10 +82,14 @@ $(function() {
 
   // Bind challenge button to request challenge
   // Send 'chat.challenge' event to server with both party's IDs (challenger & recipient)
-  $users.on( 'click', 'li[data-user-id]', function() {
+  $users.on( 'click', 'li', function() {
+    // Checks if recipient is not challenger
     var recipientID = $(this).data( 'user-id' );
-    var challenge = { challenger: connID, recipient: recipientID };
-    dispatcher.trigger( "chat.challenge", challenge );
+    
+    if ( typeof recipientID === "string" && recipientID !== connID ) {
+      var challenge = { challenger: connID, recipient: recipientID };
+      dispatcher.trigger( "chat.challenge", challenge );
+    }
 
     // TODO: Popup a dialogue to let the user know they're waiting for a response
     // TODO: Timing out the challenge request
