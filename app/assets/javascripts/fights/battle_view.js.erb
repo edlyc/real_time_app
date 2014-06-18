@@ -1,6 +1,6 @@
 // the opponent's pokemon attacks
 //   $( '#poo' ).on( 'click', function() {
-//     $( '#pooke' ).html('<%= image_tag("bulbasaur/bulba_bounce.gif") %><% audio_tag("music/menusound.wav", "music/tackle.wav"), autoplay: true %>');
+//     $( '#pooke' ).html('<%= image_tag("bulbasaur/bulba_bounce.gif") %><%= audio_tag("tackle.wav", autoplay: true) %>');
 //     setTimeout(function(){
 //       $( '#otherpoke' ).html( '<img src="bulba_back_blink.gif" alt=""> ');
 //       var pookehealth = $('#pookehealthbar');
@@ -31,7 +31,7 @@ BattleView.prototype = {
     // The method will be 'foobarAnimate'
     // convention over configuration
     var attackMethod = this[data.attackType + 'Animate'];
-    attackMethod();
+    attackMethod( data.targetIsSelf );
   },
   myPokemonFaints: function(){
     var $mypokemon = $('.my-pokemon img');
@@ -45,7 +45,29 @@ BattleView.prototype = {
     var updateTarget = data.targetIsSelf ? ".my-healthbar" : ".their-healthbar";
     $( updateTarget ).val( data.health / data.maxHealth * 100 );
   },
-  tackleAnimate: function(){
+  tackleAnimate: function( targetIsSelf ){
+    if (targetIsSelf) {
+      var $attackingPokemon = $('.their-pokemon');
+      var $targetPokemon = $( '.my-pokemon' );
+      var direction = 'Right';
+    } else {
+      var $attackingPokemon = $('.my-pokemon');
+      var $targetPokemon = $( '.their-pokemon' );
+      var direction = 'Left';
+    }
 
+    var animateClass = 'animated rubberBand';
+
+    $attackingPokemon.addClass( animateClass );
+    $attackingPokemon.one('webkitAnimationEnd mozAnimationEnd', function() {
+      $( this ).removeClass( animateClass );
+      $( this ).off( 'animationend' );
+    });
+
+    $targetPokemon.addClass( 'animated flash' );
+    $targetPokemon.one('webkitAnimationEnd mozAnimationEnd', function() {
+      $( this ).removeClass( 'animated flash' );
+      $( this ).off( 'animationend' );
+    });
   }
 };
