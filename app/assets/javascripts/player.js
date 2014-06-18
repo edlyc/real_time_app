@@ -1,9 +1,9 @@
-function Player() {
-  this.initialize();
+function Player( roomID ) {
+  this.initialize( roomID );
 }
 
 Player.prototype = {
-  initialize: function() {
+  initialize: function( roomID ) {
     var instance = this;
 
     // Set websocket client
@@ -14,8 +14,8 @@ Player.prototype = {
       instance.playerID = instance.getConnection( data );
     };
 
-    // Set private game channel
-    this.game = this.subscribeRoom();
+    // Subscribe to a private game channel
+    this.game = this.subscribeRoom( roomID );
 
     // When game is ready to begin...
     this.game.bind( "start_game", function( data ) {
@@ -56,15 +56,13 @@ Player.prototype = {
 
     this.game.on_success = this.alertJoin;
   },
+
   openSocket: function() {
     // Open a websocket and return dispatcher object
     var host = location.host;
     return new WebSocketRails( host + "/websocket" );
   },
-  subscribeRoom: function() {
-    // Subscribe to a private room & return channel object
-    var roomID = location.pathname.split( "/fights/" )[1];
-
+  subscribeRoom: function( roomID ) {
     return this.dispatcher.subscribe_private( roomID );
   },
   getOpponent: function( data ) {
@@ -72,14 +70,14 @@ Player.prototype = {
     var opponent = data[0] === this.playerID ? data[1] : data[0];
     console.log( "This is my opponent: " + opponent );
     console.log( "Both players are ready to play." );
-    
+
     return opponent;
   },
   getConnection: function( data ) {
     // Return connection ID
     var playerID = data.connection_id;
     console.log( "Connection has been established: ", playerID );
-    
+
     return playerID;
   },
   alertJoin: function() {
