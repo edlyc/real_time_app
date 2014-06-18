@@ -43,8 +43,10 @@ Player.prototype = {
 
       if ( data.loser === instance.playerID ) {
         console.log( "You lost!" );
+        myPokemonFaints();
       } else {
         console.log( "You win!" );
+        theirPokemonFaints();
       }
     });
 
@@ -84,4 +86,15 @@ Player.prototype = {
   alertJoin: function() {
     console.log( "You have successfully joined the game.");
   }
+};
+
+//animations
+var myPokemonFaints = function(){
+  var $mypokemon = $('.my-pokemon img');
+  $mypokemon.toggleClass('animated fadeOutDown');
+};
+
+var theirPokemonFaints = function(){
+  var $theirpokemon = $('.their-pokemon img');
+  $theirpokemon.toggleClass('animated rollOut');
 };

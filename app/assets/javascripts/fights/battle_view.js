@@ -18,3 +18,14 @@
 //     }, 500);
 //   });
 // });
+
+//animations
+var myPokemonFaints = function(){
+  var $mypokemon = $('.my-pokemon img');
+  $mypokemon.toggleClass('animated fadeOutDown');
+};
+
+var theirPokemonFaints = function(){
+  var $theirpokemon = $('.their-pokemon img');
+  $theirpokemon.toggleClass('animated rollOut');
+};

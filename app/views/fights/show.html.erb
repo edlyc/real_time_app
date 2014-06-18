@@ -12,7 +12,7 @@
     </div>
     <!-- My Pokemon -->
     <div class="pokemon my-pokemon">
-      <%= image_tag("bulbasaur/bulba_back.gif") %>
+      <%= image_tag("bulbasaur/bulba_back_resize.gif") %>
       <div class="poke-deck"></div>
     </div>
   </div>
@@ -27,7 +27,7 @@
     </div>
     <!-- Opponent Pokemon -->
     <div class="pokemon their-pokemon">
-      <%= image_tag("bulbasaur/bulba_still.gif") %>
+      <%= image_tag("bulbasaur/bulba_front_resize.gif") %>
       <div class="poke-deck"></div>
     </div>
   </div>
@@ -49,10 +49,11 @@
     </div>
   </div>
 </div>
+<%= javascript_include_tag "fights/battle_view" %>
 <script>
   // $(function() {
     var player = new Player();
   // });
 </script>
 
-<%= javascript_include_tag "fights/battle_view" %>
+
