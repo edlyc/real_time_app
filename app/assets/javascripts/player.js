@@ -63,7 +63,7 @@ Player.prototype = {
     return new WebSocketRails( host + "/websocket" );
   },
   subscribeRoom: function() {
-    var roomID = location.pathname.split('/fights')[1]
+    var roomID = location.pathname.split('/fights')[1];
     return this.dispatcher.subscribe_private( roomID );
   },
   getOpponent: function( data ) {
