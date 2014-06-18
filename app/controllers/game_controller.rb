@@ -34,19 +34,19 @@ class GameController < WebsocketRails::BaseController
     else
       deny_channel
     end
+  end
 
-    def receive_damage
-      game = WebsocketRails[data[:game]]
-      pokemon = connection_store[:pokemon]
+  def receive_damage
+    game = WebsocketRails[data[:game]]
+    pokemon = connection_store[:pokemon]
 
-      # Update pokemon's health
-      health = pokemon.receive_damage(data[:damage])
-      max_health = pokemon.max_health
+    # Update pokemon's health
+    health = pokemon.receive_damage(data[:damage])
+    max_health = pokemon.max_health
 
-      # End game if pokemon's health is below 0
-      game.trigger(:update_game, { player: connection.id, health: health, max_health: max_health })
-      game.trigger(:end_game, { loser: connection.id }) if health <= 0
-    end
+    # End game if pokemon's health is below 0
+    game.trigger(:update_game, { player: connection.id, health: health, max_health: max_health })
+    game.trigger(:end_game, { loser: connection.id }) if health <= 0
   end
 
   private

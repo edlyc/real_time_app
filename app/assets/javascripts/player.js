@@ -33,7 +33,7 @@ Player.prototype = {
     // Listen for update view event & update pokemon's health in view
     this.game.bind( "update_game", function( data ) {
       // Hardcoded health bar -- should change when possible as now the player implementation is coupled to the view
-      var updateTarget = data.player === player.playerID ? ".otherhealthbar" : ".pookehealthbar";
+      var updateTarget = data.player === player.playerID ? ".their-healthbar" : ".my-healthbar";
       $( updateTarget ).val( data.health / data.max_health * 100 );
     });
 
@@ -63,7 +63,7 @@ Player.prototype = {
     return new WebSocketRails( host + "/websocket" );
   },
   subscribeRoom: function() {
-    var roomID = location.pathname.split('/fights')[1];
+    var roomID = location.pathname.split( '/fights/' )[1];
     return this.dispatcher.subscribe_private( roomID );
   },
   getOpponent: function( data ) {
