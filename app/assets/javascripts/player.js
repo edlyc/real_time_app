@@ -1,4 +1,5 @@
 function Player() {
+  this.view = new BattleView();
   this.initialize();
 }
 
@@ -33,8 +34,8 @@ Player.prototype = {
     // Listen for update view event & update pokemon's health in view
     this.game.bind( "update_game", function( data ) {
       // Hardcoded health bar -- should change when possible as now the player implementation is coupled to the view
-      var updateTarget = data.player === player.playerID ? ".their-healthbar" : ".my-healthbar";
-      $( updateTarget ).val( data.health / data.max_health * 100 );
+      var targetIsSelf = data.player === player.playerID;
+      instance.view.updateHealthBar({ targetIsSelf: targetIsSelf, health: data.health, maxHealth: data.max_health });
     });
 
     // Listen for game over event
@@ -43,10 +44,10 @@ Player.prototype = {
 
       if ( data.loser === instance.playerID ) {
         console.log( "You lost!" );
-        myPokemonFaints();
+        instance.view.myPokemonFaints();
       } else {
         console.log( "You win!" );
-        theirPokemonFaints();
+        instance.view.theirPokemonFaints();
       }
     });
 
@@ -86,15 +87,4 @@ Player.prototype = {
   alertJoin: function() {
     console.log( "You have successfully joined the game.");
   }
-};
-
-//animations
-var myPokemonFaints = function(){
-  var $mypokemon = $('.my-pokemon img');
-  $mypokemon.toggleClass('animated fadeOutDown');
-};
-
-var theirPokemonFaints = function(){
-  var $theirpokemon = $('.their-pokemon img');
-  $theirpokemon.toggleClass('animated rollOut');
 };

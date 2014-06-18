@@ -20,12 +20,19 @@
 // });
 
 //animations
-var myPokemonFaints = function(){
-  var $mypokemon = $('.my-pokemon img');
-  $mypokemon.toggleClass('animated fadeOutDown');
-};
+function BattleView() {}
 
-var theirPokemonFaints = function(){
-  var $theirpokemon = $('.their-pokemon img');
-  $theirpokemon.toggleClass('animated rollOut');
+BattleView.prototype = {
+  myPokemonFaints: function(){
+    var $mypokemon = $('.my-pokemon img');
+    $mypokemon.toggleClass('animated fadeOutDown');
+  },
+  theirPokemonFaints: function(){
+    var $theirpokemon = $('.their-pokemon img');
+    $theirpokemon.toggleClass('animated rollOut');
+  },
+  updateHealthBar: function(data){
+    var updateTarget = data.targetIsSelf ? ".my-healthbar" : ".their-healthbar";
+    $( updateTarget ).val( data.health / data.maxHealth * 100 );
+  }
 };
