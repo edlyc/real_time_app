@@ -13,17 +13,3 @@
  *= require_tree .
  *= require_self
  */
-
-#chat,
-#users {
-  list-style-type: none; margin: 0; padding: 0;
-   }
-
-  #chat li,
-  #users li {
-    padding: 5px 10px;
-    }
-
-    #chat li:nth-child(odd) {
-      background: #eee;
-    }

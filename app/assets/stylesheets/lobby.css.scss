@@ -1,0 +1,63 @@
+#chat,
+#users {
+  list-style-type: none; margin: 0; padding: 0;
+   }
+
+  #chat li,
+  #users li {
+    border-bottom: 1px solid #0F380C;
+    font-weight: 700;
+    margin: 5px 0;
+    color: #0F380C;
+
+    li:first-child {
+      border-bottom: none;
+    }
+  }
+
+.current-users {
+  float: right;
+  text-align: center;
+  width: 25%;
+}
+
+.chat-container {
+  background-color: olive;
+}
+
+.chat {
+  border-right: 1px solid black;
+  color: #0F380C;
+  float: left;
+  max-height: 550px;
+  min-height: 550px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  margin-bottom: 5px;
+  width: 74%;
+}
+
+input#screen_name,
+input#message {
+  height: 25px;
+  width: 90%;
+}
+
+form#user_name,
+form#message_text {
+  padding: 3px;
+}
+
+
+// Maybe Pokemon Font
+// @font-face {
+//     font-family: 'pokemon_gbregular';
+//     src: url('/assets/fonts/pokemongb-webfont.eot');
+//     src: url('/assets/fonts/pokemongb-webfont.eot?#iefix') format('embedded-opentype'),
+//          url('/assets/fonts/pokemongb-webfont.woff') format('woff'),
+//          url('/assets/fonts/pokemongb-webfont.ttf') format('truetype'),
+//          url('/assets/fonts/pokemongb-webfont.svg#pokemon_gbregular') format('svg');
+//     font-weight: normal;
+//     font-style: normal;
+
+// }

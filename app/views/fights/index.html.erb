@@ -1,20 +1,24 @@
 <%= javascript_include_tag 'fights/chat', 'data-turbolinks-track' => true %>
 
-<h3>Users: Click to Challenge</h3>
-<div class="container">
-  <p>Current Users</p>
-  <ul id="users"></ul>
+<h3>Pokémon LIVE!</h3>
+
+<div class="chat-container">
+  <div class="chat">
+    <ul id="chat"></ul>
+  </div>
+
+  <div class="current-users">
+    <p>Current Users</p>
+    <ul id="users"></ul>
+  </div>
+
+  <form id="user_name" action="#" method="post">
+    <input type="text" id="screen_name" placeholder="screen name">
+    <input type="submit" value="Submit">
+  </form>
+
+  <form hidden id="message_text" action="#" method="post">
+    <input type="text" id="message" placeholder="message">
+    <input type="submit" value="Send">
+  </form>
 </div>
-
-<ul id="chat"></ul>
-
-<form id="user_name" action="#" method="post" style="position: absolute; bottom: 0">
-  <input type="text" id="screen_name" placeholder="screen name">
-  <input type="submit" value="Submit">
-</form>
-
-<form hidden id="message_text" action="#" method="post" style="position: absolute; bottom: 0">
-  <input type="text" id="message" placeholder="message">
-  <input type="submit" value="Send">
-</form>
-

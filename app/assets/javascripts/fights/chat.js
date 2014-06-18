@@ -3,7 +3,7 @@ $(function() {
   var userName = '';           // User's screen name
   var connID;                  // WebSocket connection ID
   var lobby;                   // WebSocket channel 'lobby'
-    
+
   var $users = $( '#users' );                 // List of users in the lobby
   var $chat_messages = $( '#chat' );          // Chat messages in the lobby
   var $user_name_form = $( '#user_name' );    // User name form
@@ -24,7 +24,7 @@ $(function() {
 
     for ( var i = 0; i < currentUsers.length; i++ ) {
       var currentUser = currentUsers[i];
-      $users.append( '<li data-user-id="' + currentUser.id + '">' + currentUser.username + '<li>' );
+      $users.append( '<li data-user-id="' + currentUser.id + '">' + currentUser.username + '</li>' );
     }
   }
 
@@ -42,10 +42,14 @@ $(function() {
     // Shows the chat message when someone sends a chat message to the lobby
     lobby.bind( 'message', function( message ) {
       $chat_messages.append( '<li>' + message.username + ':\t' + message.message + '</li>');
+
+      // Scrolls chat box to bottom of log on submit
+      var objDiv = document.querySelector(".chat");
+      objDiv.scrollTop = objDiv.scrollHeight;
     });
 
     // Set the connection ID
-    connID = connection.connection_id; 
+    connID = connection.connection_id;
   };
 
   // When a user submits a screen name
@@ -85,7 +89,7 @@ $(function() {
   $users.on( 'click', 'li', function() {
     // Checks if recipient is not challenger
     var recipientID = $(this).data( 'user-id' );
-    
+
     if ( typeof recipientID === "string" && recipientID !== connID ) {
       var challenge = { challenger: connID, recipient: recipientID };
       dispatcher.trigger( "chat.challenge", challenge );
