@@ -7,7 +7,6 @@
 //       pookehealth.val(pookehealth.val() - 15);
 //     }, 700);
 //   });
-
 //   //our pokemon attacks and does
 //   $( '#poo3' ).on( 'click', function() {
 //     $( '#otherpoke' ).html( '<img src="bulba_tackle2.gif" alt=""><audio src="menusound.wav" autoplay="autoplay"></audio>');
