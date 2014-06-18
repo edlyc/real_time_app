@@ -29,7 +29,6 @@ class GameController < WebsocketRails::BaseController
     # When the 2nd person joins, start the game
     if game.subscribers.length < 2
       accept_channel
-      binding.pry
       set_pokemon
       game.trigger(:start_game) if game.subscribers.length == 2
     else
