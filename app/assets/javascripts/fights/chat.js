@@ -1,78 +1,107 @@
 $(function() {
-  var dispatcher = new WebSocketRails('localhost:3000/websocket'); // pull host dynamically
-  var userName = '';
-  var connID;
+  var dispatcher = openSocket();
+  var userName = '';           // User's screen name
+  var connID;                  // WebSocket connection ID
+  var lobby;                   // WebSocket channel 'lobby'
+    
+  var $users = $( '#users' );                 // List of users in the lobby
+  var $chat_messages = $( '#chat' );          // Chat messages in the lobby
+  var $user_name_form = $( '#user_name' );    // User name form
+  var $user_name_field = $( '#screen_name' ); // User name field
+  var $chat_form = $( '#message_text' );      // Chat form
 
-  dispatcher.on_open = function(connection) {
-    dispatcher.subscribe('lobby');
-    dispatcher.trigger('chat.update_users');
 
-    connID = connection.connection_id;
-    console.log('Connection has been established: ', connID);
+  // Open websocket and return dispatcher object
+  function openSocket() {
+    return new WebSocketRails( location.host + '/websocket' );
+  }
+
+  // Go through the list of users and append each user name
+  // Also, attaches the user id to the user-id data attribute
+  function updateUsers( currentUsers ) {
+    // Reset the list of users
+    $users.html( '' );
+
+    for ( var i = 0; i < currentUsers.length; i++ ) {
+      var currentUser = currentUsers[i];
+      $users.append( '<li data-user-id="' + currentUser.id + '">' + currentUser.username + '<li>' );
+    }
+  }
+
+  // When the websocket connection is opened
+  // Join the lobby channel and update current users
+  dispatcher.on_open = function( connection ) {
+    lobby = dispatcher.subscribe( 'lobby' );
+
+    // Listen for the 'update_users' event
+    // Update the view to see all the users
+    lobby.bind( 'update_users', updateUsers );
+    dispatcher.trigger( 'chat.update_users' );
+
+    // Set the connection ID
+    connID = connection.connection_id; 
   };
 
-  dispatcher.bind("chat.update_users", function(current_users){
-    var $users = $("#users");
-
-    $users.html('');
-    for ( var i = 0; i < current_users.length; i++ ) {
-      var current_user = current_users[i];
-      $users.append('<li data-user-id="' + current_user.id + '">' + current_user.username + '<li>');
-    }
+  // Listen for chat.message event
+  // Shows the chat message when someone sends a chat message to the lobby
+  lobby.bind( 'message', function( message ) {
+    $chat_messages.append( '<li>' + message.username + ':\t' + message.message + '</li>');
   });
 
-  dispatcher.bind("chat.new_user", function(userInfo){
-    $('#users').append('<li data-user-id="' + userInfo.id + '">' + userInfo.username + '<li>')
-  });
-
-  dispatcher.bind("chat.message", function(message) {
-    $("#chat").append('<li>' + message.username + ':\t' + message.message + '</li>');
-  });
-
-   $("#user_name").on("submit", function( evt ) {
-    evt.preventDefault();
-    userName = $("#screen_name").val();
-    while (userName === '') {
-      window.alert('Please enter a valid screen name.');
-      userName = $("#screen_name").val();
-    }
-    var userInfo = { id: connID, username: userName };
-    dispatcher.trigger("chat.new_user", userInfo);
-
-    $("#user_name").slideUp();
-    $('#message_text').slideDown();
-  });
-
-   $("#message_text").on("submit", function( evt ) {
+  // When a user submits a screen name
+  $user_name_form.on( 'submit', function( evt ) {
     evt.preventDefault();
 
-    var message = { message: $("#message").val(), username: userName };
+    // Setting the user's screen name
+    userName = $user_name_field.val();
 
-    dispatcher.trigger("chat.message", message);
+    // If the user name is empty, warn user and don't do anything
+    // Otherwise, emit a new user event with the user's ID and username
+    if ( userName === '' ) {
+      window.alert( 'Please enter a valid screen name.' );
+    } else {
+      var userInfo = { id: connID, username: userName };
+      dispatcher.trigger( 'chat.new_user', userInfo );
+    }
+
+    // Cool animation stuff
+    $user_name_form.slideUp();
+    $chat_form.slideDown();
+  });
+
+  // When you submit a chat message, it broadcasts the message to the lobby
+  $chat_form.on( 'submit', function( evt ) {
+    evt.preventDefault();
+
+    messageContent = $( '#message' ).val();
+    var message = { message: messageContent, username: userName };
+
+    lobby.trigger( 'message', message );
     this.reset();
   });
 
   // Bind challenge button to request challenge
-  $( "#users" ).on( "click", "[data-user-id]", function() {
-    var challenge = {
-                      current_user: connID,
-                      challenger_id: $(this).data('user-id')
-                    };
-    dispatcher.trigger("chat.challenge", challenge);
+  // Send 'chat.challenge' event to server with both party's IDs (challenger & recipient)
+  $users.on( 'click', 'li[data-user-id]', function() {
+    var recipientID = $(this).data( 'user-id' );
+    var challenge = { challenger: connID, recipient: recipientID };
+    dispatcher.trigger( "chat.challenge", challenge );
+
+    // TODO: Popup a dialogue to let the user know they're waiting for a response
+    // TODO: Timing out the challenge request
   });
 
   // Bind dispatcher to listen for response from challenge method
-  // sends invite to clicked user
-  dispatcher.bind("chat.challenge", function( data ){
-    if (connID == data.challenger_id){
-      var x = confirm("would you like to challenge?");
-      if (x === true) {
-        dispatcher.trigger("chat.accept_challenge", data);
-      }
+  // Opens a challenge dialogue when receiving this event
+  dispatcher.bind( 'chat.challenge', function( data ){
+    var acceptChallenge = confirm( 'Would you like to challenge?' );
+    if ( acceptChallenge ) {
+      dispatcher.trigger( 'chat.accept_challenge', data );
     }
   });
 
-  dispatcher.bind('game.new_game', function( gameID ) {
-    var player = new Player( gameID );
+  // Redirect user to the fight room, when the challenger accepts
+  dispatcher.bind( 'game.new_game', function( gameID ) {
+    window.location = location.origin + '/fights/' + gameID;
   });
 });

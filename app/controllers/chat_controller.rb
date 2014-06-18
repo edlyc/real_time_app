@@ -3,42 +3,30 @@ class ChatController < WebsocketRails::BaseController
   def initialize_session
   end
 
-  def message
-    broadcast_message :message, data, :namespace => 'chat'
-  end
-
-  def new_user
-    broadcast_message :new_user, data, :namespace => 'chat'
-    save_user(data)
-    users_data = get_current_users
-    # send_message :current_users, data, :namespace => 'chat'
-  end
-
-  def get_users
+  # Updates everybody's user list in the lobby
+  def update_users
+    lobby = WebsocketRails["lobby"]
     users = get_current_users
-    send_message :update_users, users, :namespace => 'chat'
+    lobby.trigger :update_users, users
   end
 
+  # When a user accepts a challenge, both players are given a random room ID to join
   def accept_challenge
-    current_user = WebsocketRails['lobby'].subscribers.find do |conn|
-      conn.id == data[:current_user]
-    end
+    current_user = find_lobby_user(data[:current_user])
 
-    rand_num = rand(1_000_000)
-    game = WebsocketRails["#{rand_num}"]
-    game.make_private
+    # Generate a random room from 0 - 999,999
+    game_id = rand(1_000_000)
 
+    # TODO: Check if game room is empty before sending to players
 
-    current_user.send_message :new_game, game.name, :namespace => 'game'
-    send_message :new_game, game.name, :namespace => 'game'
+    current_user.send_message :new_game, game_id, :namespace => "game"
+    send_message :new_game, game_id, :namespace => "game"
   end
 
+  # Looks for recipient of challenge & issues challenge to them
   def challenge
-    users = $redis.lrange("lobby_users", 0, -1)
-    challenged_user = users.select do |user_id|
-      user_id == data["challenger_id"]
-    end
-    broadcast_message :challenge, data, :namespace => 'chat'
+    recipient = find_lobby_user(data[:recipient])
+    recipient.send_message :challenge, :namespace => "chat"
   end
 
   def delete_user
@@ -46,20 +34,28 @@ class ChatController < WebsocketRails::BaseController
     $redis.lrem('lobby_users', 0, connection_id)
     user_names = get_current_users
     # reset current users based on actual lobby channel connections
-    broadcast_message :update_users, user_names, :namespace => 'chat'
+    broadcast_message :update_users, user_names, :namespace => "chat"
   end
 
   private
+  # Saves user to Redis, so we can pull a list of current users in the lobby
   def save_user(data)
     $redis.rpush("lobby_users", data[:id])
     $redis.hset("user:#{data[:id]}", "username", data[:username])
   end
 
+  # Gets current lobby users (id and username) from Redis
   def get_current_users
     users = $redis.lrange("lobby_users", 0, -1)
     users.map do |user_id|
       username = $redis.hget("user:#{user_id}", "username")
       { id: user_id, username: username }
     end
+  end
+
+  # Finds the user connection based on ID
+  def find_lobby_user(id)
+    lobby_users = WebsocketRails["lobby"].subscribers
+    lobby_users.find { |conn| conn.id == id }
   end
 end
