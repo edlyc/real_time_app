@@ -1,0 +1,93 @@
+body {
+  background: black;
+  font-family: 'Source Code Pro';
+}
+
+button {
+  width: 48%;
+}
+
+  .container {
+    background: grey;
+    display: block;
+    height: 100%;
+    margin: 0 auto;
+    overflow: auto;
+    width: 100%;
+  }
+
+  .inner {
+    background: white;
+    display: block;
+    height: 100%;
+    margin: 20px auto 20px;
+    min-height: 600px;
+    max-width: 800px;
+    padding: 0;
+    overflow: hidden;
+    width: 80%;
+
+    p {
+      font-size: 28px;
+      margin: 15px 20px;
+    }
+
+  }
+
+  .banner {
+    background: black;
+    display: block;
+    margin: 0 auto;
+    max-height: 100px;
+    overflow: auto;
+    width: 100%;
+  }
+
+  .stats {
+    margin: 40px 20px;
+    position: absolute;
+    width: 30%;
+  }
+
+  .stats-outer {
+    background: #d4433a;
+    border-radius: 14px 16px;
+    margin: 4px 10px;
+    padding: 1px 10px;
+  }
+
+  .stats-inner {
+    background: #6ea1a3;
+    border-radius: 12px 14px;
+    color: white;
+    height: 102px;
+    margin: 2px;
+    padding: 2px;
+  }
+
+  .console {
+    background: #474057;
+    bottom: 0;
+    display: block;
+    height: 120px;
+    margin: 0 auto;
+    overflow: auto;
+    width: 100%;
+    z-index: 300;
+  }
+
+  .console-outer {
+    background: #d4433a;
+    border-radius: 14px 16px;
+    margin: 4px 10px;
+    padding: 1px 10px;
+  }
+
+  .console-inner {
+    background: #6ea1a3;
+    border-radius: 12px 14px;
+    color: white;
+    height: 102px;
+    margin: 2px;
+    padding: 2px;
+  }
