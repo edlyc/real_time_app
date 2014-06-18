@@ -1,9 +1,9 @@
-function Player( roomID ) {
-  this.initialize( roomID );
+function Player() {
+  this.initialize();
 }
 
 Player.prototype = {
-  initialize: function( roomID ) {
+  initialize: function() {
     var instance = this;
 
     // Set websocket client
@@ -15,7 +15,7 @@ Player.prototype = {
     };
 
     // Subscribe to a private game channel
-    this.game = this.subscribeRoom( roomID );
+    this.game = this.subscribeRoom();
 
     // When game is ready to begin...
     this.game.bind( "start_game", function( data ) {
@@ -62,7 +62,8 @@ Player.prototype = {
     var host = location.host;
     return new WebSocketRails( host + "/websocket" );
   },
-  subscribeRoom: function( roomID ) {
+  subscribeRoom: function() {
+    var roomID = location.pathname.split('/fights')[1]
     return this.dispatcher.subscribe_private( roomID );
   },
   getOpponent: function( data ) {
