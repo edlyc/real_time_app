@@ -25,7 +25,6 @@ class GameController < WebsocketRails::BaseController
   def join
     # Get the channel that the player is trying to join
     game = WebsocketRails[message[:channel]]
-
     # Only allow 2 players to join
     # When the 2nd person joins, start the game
     if game.subscribers.length < 2
