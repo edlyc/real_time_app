@@ -2,6 +2,9 @@ WebsocketRails::EventMap.describe do
   namespace :chat do
     subscribe :new_user, "chat#new_user"
     subscribe :message, "chat#message"
+    subscribe :update_users, "chat#get_users"
+    subscribe :challenge, "chat#challenge"
+    subscribe :accept_challenge, "chat#accept_challenge"
   end
 
   namespace :game do

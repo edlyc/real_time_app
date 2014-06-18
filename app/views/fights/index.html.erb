@@ -2,17 +2,21 @@
 <%= javascript_include_tag 'fights/chat', 'data-turbolinks-track' => true %>
 
 <div class="container">
+  <p>Current Users</p>
   <ul id="users">
-    <li>Current Users<li>
   </ul>
 </div>
 
 
 <ul id="chat"></ul>
 
-<form id="form" action="#" method="post" style="position: absolute; bottom: 0">
-  <input type="text" id="user_name" placeholder="Inhak Kim">
+<form id="user_name" action="#" method="post" style="position: absolute; bottom: 0">
+  <input type="text" id="screen_name" placeholder="screen name">
+  <input type="submit" value="Submit">
+</form>
+
+<form hidden id="message_text" action="#" method="post" style="position: absolute; bottom: 0">
   <input type="text" id="message" placeholder="message">
-  <input type="submit" value="Send message">
+  <input type="submit" value="Send">
 </form>
 
