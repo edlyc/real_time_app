@@ -2,13 +2,21 @@
 <html>
 <head>
   <title>RealTimeApp</title>
+  <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro:400,500,600,700,900' rel='stylesheet' type='text/css'>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 
-<%= yield %>
+<div class="container">
+  <div class="inner">
+    <!-- Top Banner -->
+    <div class="banner">
+    </div>
+    <%= yield %>
+  </div>
+</div>
 
 </body>
 </html>

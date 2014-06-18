@@ -1,58 +1,50 @@
 <h1>Welcome to the Pokemon Game</h1>
+<!-- My Pokemon Stats  -->
+<div class="stats">
+  <div class="stats-outer">
+    <div class="stats-inner">
+      <div class="my-health">
+        <progress class="my-healthbar" value="100" max="100"></progress>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- My Pokemon -->
+<div class="my-pokemon">
+  <%= image_tag("bulbasaur/bulba_back.gif") %>
+  <div class="poke-deck"></div>
+</div>
+<!-- Opponent Pokemon Stats -->
+<div class="stats">
+  <div class="stats-outer">
+    <div class="stats-inner">
+      <div class="their-health">
+        <progress class="their-healthbar" value="100" max="100"></progress>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Opponent Pokemon -->
+<div class="their-pokemon">
+  <%= image_tag("bulbasaur/bulba_still.gif") %>
+  <div class="poke-deck"></div>
+</div>
+<!-- Bottom Console -->
+<div class="console">
+  <div class="console-outer">
+    <div class="console-inner">
+      <p>Richurtle used <br>Wine Gun!</p>
+    </div>
+  </div>
+</div>
 
-<div class="container">
-  <div class="inner">
-    <!-- Top Banner -->
-    <div class="banner">
-    </div>
-    <!-- My Pokemon Stats  -->
-    <div class="stats">
-      <div class="stats-outer">
-        <div class="stats-inner">
-          <div class="my-health">
-            <progress class="my-healthbar" value="100" max="100"></progress>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- My Pokemon -->
-    <div class="my-pokemon">
-      <%= image_tag("bulbasaur/bulba_back.gif") %>
-      <div class="poke-deck"></div>
-    </div>
-    <!-- Opponent Pokemon Stats -->
-    <div class="stats">
-      <div class="stats-outer">
-        <div class="stats-inner">
-          <div class="their-health">
-            <progress class="their-healthbar" value="100" max="100"></progress>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Opponent Pokemon -->
-    <div class="their-pokemon">
-      <%= image_tag("bulbasaur/bulba_still.gif") %>
-      <div class="poke-deck"></div>
-    </div>
-    <!-- Bottom Console -->
-    <div class="console">
-      <div class="console-outer">
-        <div class="console-inner">
-          <p>Richurtle used <br>Wine Gun!</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Controls -->
-    <button class="attack">Tackle</button>
-    <button class="attacked">Attack</button>
-    <!-- Media Controls -->
-    <div class="banner">
-      <div class="music">
-        <%= audio_tag("#{@song}", autoplay: true, controls: true) %>
-      </div>
-    </div>
+<!-- Controls -->
+<button class="attack">Tackle</button>
+<button class="attacked">Attack</button>
+<!-- Media Controls -->
+<div class="banner">
+  <div class="music">
+    <%= audio_tag("#{@song}", autoplay: true, controls: true, loop: true) %>
   </div>
 </div>
 <script>
