@@ -2,3 +2,23 @@
   background: url('http://i.imgur.com/m5vMnP3.png') no-repeat;
   background-size: cover;
 }
+
+.sound-effects {
+  display: none;
+}
+
+// Attack animations
+.tackle {
+  -webkit-animation-name: rubberBand;
+  animation-name: rubberBand;
+}
+
+.counter {
+  -webkit-animation-name: wobble;
+  animation-name: wobble;
+}
+
+.receive-damage {
+  -webkit-animation-name: flash;
+  animation-name: flash;
+}

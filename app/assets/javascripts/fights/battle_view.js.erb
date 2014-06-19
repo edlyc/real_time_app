@@ -3,84 +3,57 @@ function BattleView() {}
 
 BattleView.prototype = {
   updateView: function( data ) {
+    // targetIsSelf: The target of the attack is the client (true) or the client's opponent (false)
+    // attackType: The attack should be animated (e.g. tackle, counter)
+    this.animateAttack({ targetIsSelf: data.targetIsSelf, attackType: data.attackType })
+    
     this.updateHealthBar( data );
-
-    // Attack animations have a naming convention
-    // For an attack called 'foobar'
-    // The method will be 'foobarAnimate'
-    // convention over configuration
-    var attackMethod = this[data.attackType + 'Animate'];
-    attackMethod( data.targetIsSelf );
   },
   myPokemonFaints: function(){
-    var $mypokemon = $('.my-pokemon img');
-    $mypokemon.toggleClass('animated fadeOutDown');
+    var $mypokemon = $( '.my-pokemon img' );
+    $mypokemon.toggleClass( 'animated fadeOutDown' );
   },
   theirPokemonFaints: function(){
-    var $theirpokemon = $('.their-pokemon img');
-    $theirpokemon.toggleClass('animated rollOut');
+    var $theirpokemon = $( '.their-pokemon img' );
+    $theirpokemon.toggleClass( 'animated rollOut' );
   },
-  updateHealthBar: function(data){
-    var updateTarget = data.targetIsSelf ? ".my-healthbar" : ".their-healthbar";
-    $( updateTarget ).val( data.health / data.maxHealth * 100 );
+  updateHealthBar: function( attributes ){
+    var updateTarget = attributes.targetIsSelf ? '.my-healthbar' : '.their-healthbar';
+    $( updateTarget ).val( attributes.health / attributes.maxHealth * 100 );
   },
-  tackleAnimate: function( targetIsSelf ){
-    if (targetIsSelf) {
-      var $attackingPokemon = $('.their-pokemon');
+  animateAttack: function( attributes ){
+    var attackAnimateClass = 'animated'; // Attack animation class using Animate.CSS
+
+    if ( attributes.targetIsSelf ) {
+      var $attackingPokemon = $( '.their-pokemon' );
       var $targetPokemon = $( '.my-pokemon' );
-      var direction = 'Right';
     } else {
-      var $attackingPokemon = $('.my-pokemon');
+      var $attackingPokemon = $( '.my-pokemon' );
       var $targetPokemon = $( '.their-pokemon' );
-      var direction = 'Left';
     }
 
-    var animateClass = 'animated rubberBand';
-    var $tackleSound = $('.sound-effects')
+    // Plays the appropriate sound for the appropriate attackType
+    this.playSound( attributes.attackType );
 
-    $attackingPokemon.addClass( animateClass );
-    $tackleSound.html('<%= audio_tag('tackle.wav', autoplay: true) %>');
+    // Animate the pokemon for the appropriate attackType
+    this.animatePokemon.call( $attackingPokemon, attributes.attackType );
+    this.animatePokemon.call( $targetPokemon, 'receive-damage' );
+  },
+  animatePokemon: function( attackType ) {
+    var animationClass = 'animated ' + attackType;
+    var $pokemon = $( this );
 
-    $attackingPokemon.one('webkitAnimationEnd mozAnimationEnd', function() {
-      $( this ).removeClass( animateClass );
-      $( this ).off( 'animationend' );
-      $tackleSound.off('animationend');
-    });
+    // Add animation class
+    $pokemon.addClass( animationClass );
 
-    $targetPokemon.addClass( 'animated flash' );
-    $targetPokemon.one('webkitAnimationEnd mozAnimationEnd', function() {
-      $( this ).removeClass( 'animated flash' );
-      $( this ).off( 'animationend' );
+    // After animation is over, reset the pokemon's state
+    $pokemon.one('webkitAnimationEnd mozAnimationEnd', function() {
+      $( this ).removeClass( animationClass );
     });
   },
-
-  counterAnimate: function( targetIsSelf ){
-    if (targetIsSelf) {
-        var $attackingPokemon = $('.their-pokemon');
-        var $targetPokemon = $( '.my-pokemon' );
-        var direction = 'Right';
-      } else {
-        var $attackingPokemon = $('.my-pokemon');
-        var $targetPokemon = $( '.their-pokemon' );
-        var direction = 'Left';
-      }
-
-      var animateClass = 'animated wobble';
-      var $tackleSound = $('.sound-effects')
-
-      $attackingPokemon.addClass( animateClass );
-      $tackleSound.html('<%= audio_tag('counter.wav', autoplay: true) %>');
-
-      $attackingPokemon.one('webkitAnimationEnd mozAnimationEnd', function() {
-        $( this ).removeClass( animateClass );
-        $( this ).off( 'animationend' );
-        $tackleSound.off('animationend');
-      });
-
-      $targetPokemon.addClass( 'animated flash' );
-      $targetPokemon.one('webkitAnimationEnd mozAnimationEnd', function() {
-        $( this ).removeClass( 'animated flash' );
-        $( this ).off( 'animationend' );
-    });
+  playSound: function( attackType ) {
+    // Finds the appropriate audio tag and plays it
+    var attackAudio = document.getElementById( 'audio-' + attackType );
+    attackAudio.play();
   }
 };
