@@ -6,7 +6,7 @@ BattleView.prototype = {
     // targetIsSelf: The target of the attack is the client (true) or the client's opponent (false)
     // attackType: The attack should be animated (e.g. tackle, counter)
     this.animateAttack({ targetIsSelf: data.targetIsSelf, attackType: data.attackType })
-    
+
     this.updateHealthBar( data );
   },
   pokemonFaints: function( targetIsSelf ) {
