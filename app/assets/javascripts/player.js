@@ -35,6 +35,7 @@ Player.prototype = {
     this.game.bind( "update_game", function( data ) {
       // Hardcoded health bar -- should change when possible as now the player implementation is coupled to the view
       var targetIsSelf = data.player === instance.playerID;
+      
       instance.view.updateView({
         targetIsSelf: targetIsSelf,
         health: data.health,
@@ -47,8 +48,8 @@ Player.prototype = {
     this.game.bind( "end_game", function( data ){
       instance.dispatcher.unsubscribe( instance.game.name );
 
-      var targetIsSelf = data.loser === instance.playerID;
-      instance.view.pokemonFaints( targetIsSelf );
+      // var targetIsSelf = data.loser === instance.playerID;
+      // instance.view.pokemonFaints( targetIsSelf );
     });
 
     // Bind attack buttons to send attack messages

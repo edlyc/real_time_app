@@ -3,11 +3,35 @@ function BattleView() {}
 
 BattleView.prototype = {
   updateView: function( data ) {
-    // targetIsSelf: The target of the attack is the client (true) or the client's opponent (false)
-    // attackType: The attack should be animated (e.g. tackle, counter)
-    this.animateAttack({ targetIsSelf: data.targetIsSelf, attackType: data.attackType })
+    this.battleData = data;
 
-    this.updateHealthBar( data );
+    var instance = this;
+
+    if ( data.targetIsSelf ) {
+      var $attackingPokemon = $( '#their-pokemon-avatar' );
+      var $targetPokemon = $( '#my-pokemon-avatar' );
+    } else {
+      var $attackingPokemon = $( '#my-pokemon-avatar' );
+      var $targetPokemon = $( '#their-pokemon-avatar' );
+    }
+
+    // Plays the appropriate sound for the appropriate attack type
+    this.playSound( data.attackType );
+
+    // Update the health bar
+    this.updateHealthBar();
+
+    // Animate the pokemon for the appropriate attack type
+    this.animateAttack.call( $attackingPokemon, data.attackType );
+    this.animateAttack.call( $targetPokemon, 'receive-damage' );
+
+    // After the attack animation has finished...
+    // If pokemon has fainted, do faint stuff
+    if ( data.health === 0 ) {
+      $targetPokemon.one( 'webkitAnimationEnd mozAnimationEnd', function() {
+        instance.pokemonFaints();
+      });
+    }
   },
   pokemonFaints: function( targetIsSelf ) {
     var prefix = targetIsSelf ? 'my-pokemon' : 'their-pokemon';
@@ -18,27 +42,11 @@ BattleView.prototype = {
     $pokemon.addClass( faintAnimation );
     this.playSound( 'faint' );
   },
-  updateHealthBar: function( attributes ){
-    var updateTarget = attributes.targetIsSelf ? '.my-healthbar' : '.their-healthbar';
-    $( updateTarget ).val( attributes.health / attributes.maxHealth * 100 );
+  updateHealthBar: function(){
+    var updateTarget = this.battleData.targetIsSelf ? '.my-healthbar' : '.their-healthbar';
+    $( updateTarget ).val( this.battleData.health / this.battleData.maxHealth * 100 );
   },
-  animateAttack: function( attributes ){
-    if ( attributes.targetIsSelf ) {
-      var $attackingPokemon = $( '#their-pokemon-avatar' );
-      var $targetPokemon = $( '#my-pokemon-avatar' );
-    } else {
-      var $attackingPokemon = $( '#my-pokemon-avatar' );
-      var $targetPokemon = $( '#their-pokemon-avatar' );
-    }
-
-    // Plays the appropriate sound for the appropriate attackType
-    this.playSound( attributes.attackType );
-
-    // Animate the pokemon for the appropriate attackType
-    this.animateOnce.call( $attackingPokemon, attributes.attackType );
-    this.animateOnce.call( $targetPokemon, 'receive-damage' );
-  },
-  animateOnce: function( animationType ) {
+  animateAttack: function( animationType ) {
     // Add animation class to Pokemon
     var $pokemon = $( this );
     $pokemon.addClass( animationType );
