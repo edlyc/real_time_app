@@ -1,8 +1,3 @@
-html {
-  height: 100%;
-  width: 100%;
-}
-
 body {
   background-image: url('http://i.imgur.com/O7ZWigt.png');
   background-size: zoom;
@@ -21,12 +16,11 @@ button {
   }
 
   .inner {
-    border: 2px solid black;
     display: block;
-    margin: 119px 66px 0 auto;
+    margin: 0 auto;
     max-width: 802px;
     min-height: 462px;
-    padding-left: 0;
+    padding: 65px 0 0 0;
     overflow: hidden;
 
     p {

@@ -2,6 +2,7 @@
 .lobby {
  background: url('gb_display.png') no-repeat;
  background-size: cover;
+ border: 10px solid black;
  color: #97BB46;
 }
 
@@ -62,7 +63,7 @@
     font-family: 'pokemon_gbregular';
     height: 25px;
     margin: 5px 0 5px -10px;
-    width: 100px
+    width: 97px
   }
 
   input[type='text'] {
