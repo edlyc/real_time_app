@@ -10,49 +10,42 @@ BattleView.prototype = {
     this.updateHealthBar( data );
   },
   pokemonFaints: function( targetIsSelf ) {
-    if ( targetIsSelf ) {
-      var $pokemon = $( '.my-pokemon img' );
-      var faintAnimation = 'myPokeFaint';
-    } else {
-      var $pokemon = $( '.their-pokemon img' );
-      var faintAnimation = 'theirPokeFaint';
-    }
+    var prefix = targetIsSelf ? 'my-pokemon' : 'their-pokemon';
+
+    var $pokemon = $( '#' + prefix + '-avatar' );
+    var faintAnimation = prefix + '-faint';
 
     $pokemon.addClass( faintAnimation );
     this.playSound( 'faint' );
-  }
+  },
   updateHealthBar: function( attributes ){
     var updateTarget = attributes.targetIsSelf ? '.my-healthbar' : '.their-healthbar';
     $( updateTarget ).val( attributes.health / attributes.maxHealth * 100 );
   },
   animateAttack: function( attributes ){
-    var attackAnimateClass = 'animated'; // Attack animation class using Animate.CSS
-
     if ( attributes.targetIsSelf ) {
-      var $attackingPokemon = $( '.their-pokemon' );
-      var $targetPokemon = $( '.my-pokemon' );
+      var $attackingPokemon = $( '#their-pokemon-avatar' );
+      var $targetPokemon = $( '#my-pokemon-avatar' );
     } else {
-      var $attackingPokemon = $( '.my-pokemon' );
-      var $targetPokemon = $( '.their-pokemon' );
+      var $attackingPokemon = $( '#my-pokemon-avatar' );
+      var $targetPokemon = $( '#their-pokemon-avatar' );
     }
 
     // Plays the appropriate sound for the appropriate attackType
     this.playSound( attributes.attackType );
 
     // Animate the pokemon for the appropriate attackType
-    this.animatePokemon.call( $attackingPokemon, attributes.attackType );
-    this.animatePokemon.call( $targetPokemon, 'receive-damage' );
+    this.animateOnce.call( $attackingPokemon, attributes.attackType );
+    this.animateOnce.call( $targetPokemon, 'receive-damage' );
   },
-  animatePokemon: function( attackType ) {
-    var animationClass = 'animated ' + attackType;
+  animateOnce: function( animationType ) {
+    // Add animation class to Pokemon
     var $pokemon = $( this );
-
-    // Add animation class
-    $pokemon.addClass( animationClass );
+    $pokemon.addClass( animationType );
 
     // After animation is over, reset the pokemon's state
     $pokemon.one('webkitAnimationEnd mozAnimationEnd', function() {
-      $( this ).removeClass( animationClass );
+      $( this ).removeClass( animationType );
     });
   },
   playSound: function( id ) {

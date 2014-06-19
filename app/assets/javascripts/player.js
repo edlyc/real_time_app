@@ -34,7 +34,7 @@ Player.prototype = {
     // Listen for update view event & update pokemon's health in view
     this.game.bind( "update_game", function( data ) {
       // Hardcoded health bar -- should change when possible as now the player implementation is coupled to the view
-      var targetIsSelf = data.player === player.playerID;
+      var targetIsSelf = data.player === instance.playerID;
       instance.view.updateView({
         targetIsSelf: targetIsSelf,
         health: data.health,

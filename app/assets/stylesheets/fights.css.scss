@@ -8,12 +8,12 @@
 }
 
 // Faint animations
-.myPokeFaint {
+.my-pokemon-faint {
   -webkit-animation-name: fadeOutDown;
   animation-name: fadeOutDown;
 }
 
-.theirPokeFaint {
+.their-pokemon-faint {
   -webkit-animation-name: rollOut;
   animation-name: rollOut;
 }
