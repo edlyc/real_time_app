@@ -1,9 +1,9 @@
 WebsocketRails::EventMap.describe do
-  namespace :chat do
-    subscribe :new_user, "chat#new_user"
-    subscribe :update_users, "chat#update_users"
-    subscribe :challenge, "chat#challenge"
-    subscribe :accept_challenge, "chat#accept_challenge"
+  namespace :lobby do
+    subscribe :new_user, "lobby#new_user"
+    subscribe :update_users, "lobby#update_users"
+    subscribe :challenge, "lobby#challenge"
+    subscribe :accept_challenge, "lobby#accept_challenge"
   end
 
   namespace :game do
@@ -15,5 +15,5 @@ WebsocketRails::EventMap.describe do
     subscribe :subscribe_private, "game#join"
   end
 
-  subscribe :client_disconnected, "chat#delete_user"
+  subscribe :client_disconnected, "lobby#delete_user"
 end

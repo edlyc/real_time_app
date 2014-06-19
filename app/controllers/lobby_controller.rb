@@ -1,4 +1,4 @@
-class ChatController < WebsocketRails::BaseController
+class LobbyController < WebsocketRails::BaseController
   @@lobby_room = "lobby"            # Websocket channel name for the lobby
   @@lobby_users = "lobby_users"     # Redis field for lobby users
 
@@ -7,7 +7,7 @@ class ChatController < WebsocketRails::BaseController
 
   # Saves user to the database and updates user views for everyone in the lobby
   def new_user
-    save_user(data)
+    save_user data
     update_users
   end
 
@@ -33,8 +33,10 @@ class ChatController < WebsocketRails::BaseController
 
   # Looks for recipient of challenge & issues challenge to them
   def challenge
-    recipient  = find_lobby_user(data[:recipient])
-    recipient.send_message :challenge, data, :namespace => "chat"
+    recipient  = find_lobby_user data
+    challenger = connection.id
+
+    recipient.send_message :challenge, challenger, :namespace => "lobby"
   end
 
   def delete_user
@@ -45,9 +47,9 @@ class ChatController < WebsocketRails::BaseController
 
   private
   # Saves user to Redis, so we can pull a list of current users in the lobby
-  def save_user(data)
-    $redis.rpush(@@lobby_users, data[:id])
-    $redis.hset("user:#{data[:id]}", "username", data[:username])
+  def save_user(username)
+    $redis.rpush @@lobby_users, connection.id
+    $redis.hset "user:#{connection.id}", "username", username
   end
 
   # Gets current lobby users (id and username) from Redis

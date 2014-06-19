@@ -1,21 +1,5 @@
-
-#chat,
-#users {
-  list-style-type: none; margin: 0; padding: 0;
-   }
-
-  #chat li,
-  #users li {
-    border-bottom: 1px solid #0F380C;
-    font-family: 'pokemon_gbregular';
-    margin: 5px 0;
-    color: #0F380C;
-
-  }
-
-  .lobby {
-   background-color: olive;
-  }
+.lobby {
+  background-color: olive;
 
   // Lists, e.g. chat history and current users
   .lobby-list {
@@ -26,6 +10,7 @@
     li {
       border-bottom: 1px solid #0F380C;
       color: #0F380C;
+      font-family: 'pokemon_gbregular';
       font-weight: 700;
       margin: 5px 0;
     }
@@ -62,19 +47,5 @@
       height: 25px;
       width: 90%;
     }
-
+  }
 }
-
-
-// Maybe Pokemon Font
-// @font-face {
-//     font-family: 'pokemon_gbregular';
-//     src: url('/assets/fonts/pokemongb-webfont.eot');
-//     src: url('/assets/fonts/pokemongb-webfont.eot?#iefix') format('embedded-opentype'),
-//          url('/assets/fonts/pokemongb-webfont.woff') format('woff'),
-//          url('/assets/fonts/pokemongb-webfont.ttf') format('truetype'),
-//          url('/assets/fonts/pokemongb-webfont.svg#pokemon_gbregular') format('svg');
-//     font-weight: normal;
-//     font-style: normal;
-
-// }
