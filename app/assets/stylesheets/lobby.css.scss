@@ -1,3 +1,4 @@
+
 #chat,
 #users {
   list-style-type: none; margin: 0; padding: 0;
@@ -6,46 +7,61 @@
   #chat li,
   #users li {
     border-bottom: 1px solid #0F380C;
-    font-weight: 700;
+    font-family: 'pokemon_gbregular';
     margin: 5px 0;
     color: #0F380C;
 
-    li:first-child {
+  .lobby {
+   background-color: olive;
+  }
+
+  // Lists, e.g. chat history and current users
+  .lobby-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      border-bottom: 1px solid #0F380C;
+      color: #0F380C;
+      font-weight: 700;
+      margin: 5px 0;
+    }
+
+    li:last-child {
       border-bottom: none;
     }
   }
 
-.current-users {
-  float: right;
-  text-align: center;
-  width: 25%;
-}
+  // Chat message pane
+  .lobby-messages {
+    border-right: 1px solid black;
+    color: #0F380C;
+    float: left;
+    margin-bottom: 5px;
+    max-height: 550px;
+    min-height: 550px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width: 74%;
+  }
 
-.chat-container {
-  background-color: olive;
-}
+  // Current user pane
+  .lobby-users {
+    float: right;
+    text-align: center;
+    width: 25%;
+  }
 
-.chat {
-  border-right: 1px solid black;
-  color: #0F380C;
-  float: left;
-  max-height: 550px;
-  min-height: 550px;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  margin-bottom: 5px;
-  width: 74%;
-}
+  // Forms, e.g. chat message & screen name selection
+  .lobby-form {
+    padding: 3px;
 
-input#screen_name,
-input#message {
-  height: 25px;
-  width: 90%;
-}
-
-form#user_name,
-form#message_text {
-  padding: 3px;
+    input[type='text'] {
+      height: 25px;
+      width: 90%;
+    }
+  }
 }
 
 
