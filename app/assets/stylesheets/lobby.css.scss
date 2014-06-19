@@ -1,6 +1,19 @@
-// Styling for the Lobby Room
-.lobby {
-  background-color: olive;
+
+#chat,
+#users {
+  list-style-type: none; margin: 0; padding: 0;
+   }
+
+  #chat li,
+  #users li {
+    border-bottom: 1px solid #0F380C;
+    font-family: 'pokemon_gbregular';
+    margin: 5px 0;
+    color: #0F380C;
+
+  .lobby {
+   background-color: olive;
+  }
 
   // Lists, e.g. chat history and current users
   .lobby-list {
@@ -14,7 +27,7 @@
       font-weight: 700;
       margin: 5px 0;
     }
-    
+
     li:last-child {
       border-bottom: none;
     }
@@ -32,7 +45,7 @@
     overflow-x: hidden;
     width: 74%;
   }
-  
+
   // Current user pane
   .lobby-users {
     float: right;
