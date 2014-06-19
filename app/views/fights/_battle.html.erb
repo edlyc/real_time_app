@@ -1,0 +1,59 @@
+<div class="screen fight-arena" id="battle" style="display: none;">
+  <!-- My Pokemon Stats  -->
+  <div class="stats my-stats">
+    <div class="stats-outer">
+      <div class="stats-inner">
+        <div class="their-health">
+          <progress class="health-bar their-healthbar" value="100" max="100"></progress>
+        </div>
+        <p>Player 1</p>
+        <p>X Remaining</p>
+      </div>
+    </div>
+    <!-- My Pokemon -->
+    <div class="pokemon my-pokemon">
+      <%= image_tag "bulbasaur/bulba_back_resize.gif", class: "animated", id: "my-pokemon-avatar" %>
+      <div class="poke-deck"></div>
+    </div>
+  </div>
+  <!-- Opponent Pokemon Stats -->
+  <div class="stats">
+    <!-- Opponent Pokemon -->
+    <div class="pokemon their-pokemon">
+      <%= image_tag "bulbasaur/bulba_front_resize.gif", class: "animated", id: "their-pokemon-avatar" %>
+      <div class="poke-deck"></div>
+    </div>
+    <div class="stats-outer their-stats">
+      <div class="stats-inner">
+        <div class="my-health">
+          <progress class="health-bar my-healthbar" value="100" max="100"></progress>
+        </div>
+        <p>Player 2</p>
+        <p>Y Remaining</p>
+      </div>
+    </div>
+  </div>
+  <!-- Bottom Console -->
+  <div class="console">
+    <div class="console-outer">
+      <div class="console-inner">
+        <p>Richurtle used <br>Wine Gun!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <button class="attack" data-attack-type="tackle">Tackle</button>
+  <button class="attack" data-attack-type="counter">Counter</button>
+  <!-- Media Controls -->
+  <div class="banner">
+    <div class="music">
+      <%= audio_tag "#{@song}", controls: true, id: 'audio-battle' %>
+    </div>
+  </div>
+  <div class="sound-effects">
+    <%= audio_tag "tackle.wav", id: "audio-tackle" %>
+    <%= audio_tag "counter.wav", id: "audio-counter" %>
+    <%= audio_tag "faint.wav", id: "audio-faint" %>
+  </div>
+</div>

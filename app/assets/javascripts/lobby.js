@@ -18,22 +18,11 @@ Lobby.prototype = {
       usernameField: $( '#screen_name' ) // User name field
     };
 
+    // Show the lobby view
+    this.show();
+
     // Subscribe to the lobby channel
-    this.channel = this.dispatcher.subscribe( 'lobby' );
-
-    // Listen for the 'update_users' event
-    this.channel.bind( 'update_users', function( currentUsers ) {
-      instance.updateUsers( currentUsers );
-    });
-
-    // Tell everyone in the lobby channel to update their view
-    this.dispatcher.trigger( 'lobby.update_users' );
-
-    // Listen for lobby.message event
-    // Shows the chat message when someone sends a chat message to the lobby
-    this.channel.bind( 'message', function( message ) {
-      instance.updateMessages( message );
-    });
+    this.subscribeLobby();
 
     // Listen for challenge event
     // Opens a challenge dialogue when receiving this event
@@ -133,7 +122,8 @@ Lobby.prototype = {
   // If the user accepts dialog, send response to server with both player's connection IDs
   handleChallenge: function( challenger ) {
     var acceptChallenge = confirm( 'Would you like to challenge?' );
-    var connectionID = this.dispatcher._conn.connection_id;
+    var dispatcher = this.dispatcher;
+    var connectionID = dispatcher._conn.connection_id;
 
     // Send up both player IDs, if the challenge is accepted
     // Server will have this connection's ID
@@ -145,13 +135,42 @@ Lobby.prototype = {
   },
 
   // Hide the chat view
-  hide: function() {
+  // Unsubscribe from the lobby
+  destroy: function() {
+    this.dispatcher.trigger( 'lobby.unsubscribe' );
     $( this.elements.lobby ).hide();
+  },
+
+  rejoin: function() {
+    this.show();
+    this.subscribeLobby();
   },
 
   // Show the chat view
   show: function() {
     $( this.elements.lobby ).show();
+  },
+
+  // Subscribe to Lobby channel
+  subscribeLobby: function() {
+    var instance = this;
+    this.channel = this.dispatcher.subscribe( 'lobby' );
+
+    this.channel.on_success = function() {
+      // Listen for the 'update_users' event
+      instance.channel.bind( 'update_users', function( currentUsers ) {
+        instance.updateUsers( currentUsers );
+      });
+
+      // Listen for lobby.message event
+      // Shows the chat message when someone sends a chat message to the lobby
+      instance.channel.bind( 'message', function( message ) {
+        instance.updateMessages( message );
+      });
+
+      // Get all the users;
+      instance.channel.trigger( 'update_users' );
+    };
   },
 
   // Update the list of current users in the lobby

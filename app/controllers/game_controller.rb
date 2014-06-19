@@ -14,9 +14,14 @@ class GameController < WebsocketRails::BaseController
 
       # Only allow an attack every 2 seconds
       if !connection_store[:next_attack] || connection_store[:next_attack] < Time.now
-        damage = user_pokemon.attack(data[:attack_type])
+        damage = user_pokemon.attack data[:attack_type]
 
-        game.trigger(:damage_dealt, { opponent: opponent.id, damage: damage, attack_type: data[:attack_type] })
+        damage_info = {
+          opponent: opponent.id,
+          damage: damage,
+          attack_type: data[:attack_type]
+        }
+        game.trigger :damage_dealt, damage_info
         connection_store[:next_attack] = 2.seconds.from_now
       end
     end
@@ -52,7 +57,10 @@ class GameController < WebsocketRails::BaseController
       attack_type: data[:attack_type]
     }
     game.trigger(:update_game, update_data)
-    game.trigger(:end_game, { loser: connection.id }) if health <= 0
+    
+    # Send the loser's connection ID, when the game is over
+    game.trigger(:end_game, connection.id) if health <= 0
+
   end
 
   private
