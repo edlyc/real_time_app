@@ -1,6 +1,8 @@
+// Styling for the Lobby Room
 .lobby {
   background-color: olive;
 
+  // Lists, e.g. chat history and current users
   .lobby-list {
     list-style-type: none;
     margin: 0;
@@ -8,10 +10,9 @@
 
     li {
       border-bottom: 1px solid #0F380C;
+      color: #0F380C;
       font-weight: 700;
       margin: 5px 0;
-      color: #0F380C;
-
     }
     
     li:last-child {
@@ -19,24 +20,27 @@
     }
   }
 
-  .lobby-messages-list {
+  // Chat message pane
+  .lobby-messages {
     border-right: 1px solid black;
     color: #0F380C;
     float: left;
+    margin-bottom: 5px;
     max-height: 550px;
     min-height: 550px;
     overflow-y: scroll;
     overflow-x: hidden;
-    margin-bottom: 5px;
     width: 74%;
   }
   
-  .current-users {
+  // Current user pane
+  .lobby-users {
     float: right;
     text-align: center;
     width: 25%;
   }
 
+  // Forms, e.g. chat message & screen name selection
   .lobby-form {
     padding: 3px;
 
