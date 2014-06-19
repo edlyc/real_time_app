@@ -63,8 +63,6 @@ Player.prototype = {
         attack_type: attack_type
       });
     });
-
-    this.game.on_success = this.alertJoin;
   },
 
   openSocket: function() {
@@ -85,8 +83,5 @@ Player.prototype = {
     // Return connection ID
     var playerID = data.connection_id;
     return playerID;
-  },
-  alertJoin: function() {
-    console.log( "You have successfully joined the game.");
   }
 };
