@@ -9,14 +9,18 @@ BattleView.prototype = {
     
     this.updateHealthBar( data );
   },
-  myPokemonFaints: function(){
-    var $mypokemon = $( '.my-pokemon img' );
-    $mypokemon.toggleClass( 'animated fadeOutDown' );
-  },
-  theirPokemonFaints: function(){
-    var $theirpokemon = $( '.their-pokemon img' );
-    $theirpokemon.toggleClass( 'animated rollOut' );
-  },
+  pokemonFaints: function( targetIsSelf ) {
+    if ( targetIsSelf ) {
+      var $pokemon = $( '.my-pokemon img' );
+      var faintAnimation = 'myPokeFaint';
+    } else {
+      var $pokemon = $( '.their-pokemon img' );
+      var faintAnimation = 'theirPokeFaint';
+    }
+
+    $pokemon.addClass( faintAnimation );
+    this.playSound( 'faint' );
+  }
   updateHealthBar: function( attributes ){
     var updateTarget = attributes.targetIsSelf ? '.my-healthbar' : '.their-healthbar';
     $( updateTarget ).val( attributes.health / attributes.maxHealth * 100 );
@@ -51,9 +55,8 @@ BattleView.prototype = {
       $( this ).removeClass( animationClass );
     });
   },
-  playSound: function( attackType ) {
+  playSound: function( id ) {
     // Finds the appropriate audio tag and plays it
-    var attackAudio = document.getElementById( 'audio-' + attackType );
-    attackAudio.play();
+    document.getElementById( 'audio-' + id ).play();
   }
 };

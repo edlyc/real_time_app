@@ -7,6 +7,17 @@
   display: none;
 }
 
+// Faint animations
+.myPokeFaint {
+  -webkit-animation-name: fadeOutDown;
+  animation-name: fadeOutDown;
+}
+
+.theirPokeFaint {
+  -webkit-animation-name: rollOut;
+  animation-name: rollOut;
+}
+
 // Attack animations
 .tackle {
   -webkit-animation-name: rubberBand;

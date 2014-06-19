@@ -55,13 +55,14 @@
   <div class="sound-effects">
     <%= audio_tag "tackle.wav", id: "audio-tackle" %>
     <%= audio_tag "counter.wav", id: "audio-counter" %>
+    <%= audio_tag "faint.wav", id: "audio-faint" %>
   </div>
 </div>
 <%= javascript_include_tag "fights/battle_view" %>
 <script>
-  // $(function() {
+  $(function() {
     var player = new Player();
-  // });
+  });
 </script>
 
 
