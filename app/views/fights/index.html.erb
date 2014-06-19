@@ -2,22 +2,20 @@
 
 <h3>Pokémon LIVE!</h3>
 
-<div class="chat-container">
-  <div class="chat">
-    <ul id="chat"></ul>
-  </div>
+<div class="lobby">
+  <ul class="lobby-list lobby-messages-list" id="chat"></ul>
 
   <div class="current-users">
     <p>Current Users</p>
-    <ul id="users"></ul>
+    <ul class="lobby-list" id="users"></ul>
   </div>
 
-  <form id="user_name" action="#" method="post">
+  <form class="lobby-form" id="user_name" action="#" method="post">
     <input type="text" id="screen_name" placeholder="screen name">
     <input type="submit" value="Submit">
   </form>
 
-  <form hidden id="message_text" action="#" method="post">
+  <form hidden class="lobby-form" id="message_text" action="#" method="post">
     <input type="text" id="message" placeholder="message">
     <input type="submit" value="Send">
   </form>

@@ -1,51 +1,50 @@
-#chat,
-#users {
-  list-style-type: none; margin: 0; padding: 0;
-   }
+.lobby {
+  background-color: olive;
 
-  #chat li,
-  #users li {
-    border-bottom: 1px solid #0F380C;
-    font-weight: 700;
-    margin: 5px 0;
-    color: #0F380C;
+  .lobby-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 
-    li:first-child {
+    li {
+      border-bottom: 1px solid #0F380C;
+      font-weight: 700;
+      margin: 5px 0;
+      color: #0F380C;
+
+    }
+    
+    li:last-child {
       border-bottom: none;
     }
   }
 
-.current-users {
-  float: right;
-  text-align: center;
-  width: 25%;
-}
+  .lobby-messages-list {
+    border-right: 1px solid black;
+    color: #0F380C;
+    float: left;
+    max-height: 550px;
+    min-height: 550px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    margin-bottom: 5px;
+    width: 74%;
+  }
+  
+  .current-users {
+    float: right;
+    text-align: center;
+    width: 25%;
+  }
 
-.chat-container {
-  background-color: olive;
-}
+  .lobby-form {
+    padding: 3px;
 
-.chat {
-  border-right: 1px solid black;
-  color: #0F380C;
-  float: left;
-  max-height: 550px;
-  min-height: 550px;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  margin-bottom: 5px;
-  width: 74%;
-}
-
-input#screen_name,
-input#message {
-  height: 25px;
-  width: 90%;
-}
-
-form#user_name,
-form#message_text {
-  padding: 3px;
+    input[type='text'] {
+      height: 25px;
+      width: 90%;
+    }
+  }
 }
 
 
