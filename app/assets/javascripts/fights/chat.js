@@ -41,7 +41,7 @@ $(function() {
     // Listen for chat.message event
     // Shows the chat message when someone sends a chat message to the lobby
     lobby.bind( 'message', function( message ) {
-      $chat_messages.append( '<li>' + message.username + ':\t' + message.message + '</li>');
+      $chat_messages.append( '<li>' + message.timeStamp + message.username + ':\t' + message.message + '</li>');
 
       // Scrolls chat box to bottom of log on submit
       var objDiv = document.querySelector(".chat");
@@ -76,9 +76,13 @@ $(function() {
   // When you submit a chat message, it broadcasts the message to the lobby
   $chat_form.on( 'submit', function( evt ) {
     evt.preventDefault();
+    var date        = new Date( evt.timeStamp );
+    var hours       = date.getHours();
+    var minutes     = date.getMinutes();
+    var messageTime = (hours + ":" + minutes + " | ");
 
     messageContent = $( '#message' ).val();
-    var message = { message: messageContent, username: userName };
+    var message = { timeStamp: messageTime, message: messageContent, username: userName };
 
     lobby.trigger( 'message', message );
     this.reset();
@@ -102,9 +106,12 @@ $(function() {
   // Bind dispatcher to listen for response from challenge method
   // Opens a challenge dialogue when receiving this event
   dispatcher.bind( 'chat.challenge', function( data ){
-    var acceptChallenge = confirm( 'Would you like to challenge?' );
+    var acceptChallenge = confirm( 'Would you like to challenge?');
+
     if ( acceptChallenge ) {
       dispatcher.trigger( 'chat.accept_challenge', data );
+    } else {
+      return false;
     }
   });
 

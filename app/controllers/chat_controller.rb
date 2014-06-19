@@ -33,7 +33,7 @@ class ChatController < WebsocketRails::BaseController
 
   # Looks for recipient of challenge & issues challenge to them
   def challenge
-    recipient = find_lobby_user(data[:recipient])
+    recipient  = find_lobby_user(data[:recipient])
     recipient.send_message :challenge, data, :namespace => "chat"
   end
 
