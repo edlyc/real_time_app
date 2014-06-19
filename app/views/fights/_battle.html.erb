@@ -37,20 +37,14 @@
   <div class="console">
     <div class="console-outer">
       <div class="console-inner">
+        <!-- Controls -->
+        <button class="attack" data-attack-type="counter">Counter</button>
+        <button class="attack" data-attack-type="tackle">Tackle</button>
         <p>Richurtle used <br>Wine Gun!</p>
       </div>
     </div>
   </div>
 
-  <!-- Controls -->
-  <button class="attack" data-attack-type="tackle">Tackle</button>
-  <button class="attack" data-attack-type="counter">Counter</button>
-  <!-- Media Controls -->
-  <div class="banner">
-    <div class="music">
-      <%= audio_tag "#{@song}", controls: true, id: 'audio-battle' %>
-    </div>
-  </div>
   <div class="sound-effects">
     <%= audio_tag "tackle.wav", id: "audio-tackle" %>
     <%= audio_tag "counter.wav", id: "audio-counter" %>
