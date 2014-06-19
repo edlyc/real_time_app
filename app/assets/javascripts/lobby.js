@@ -40,6 +40,15 @@ Lobby.prototype = {
     this.dispatcher.bind( 'lobby.challenge', function( challenger ){
       instance.handleChallenge( challenger );
     });
+
+    // Sets 'lobby.username' when user submits their username
+    this.bindUsernameForm();
+
+    // Updates everyone's chat messages on form submission
+    this.bindChatForm();
+
+    // Challenges a user if you click a username in the lobby's current user list
+    this.bindUsernameClick();
   },
 
   // Updates everyone's chat messages on form submission
@@ -124,14 +133,10 @@ Lobby.prototype = {
     var acceptChallenge = confirm( 'Would you like to challenge?' );
     var connectionID = this.dispatcher._conn.connection_id;
 
-    var playersData = {
-      challenger: challenger,
-      recipient: connectionID
-    };
-
     // Send up both player IDs, if the challenge is accepted
+    // Server will have this connection's ID
     if ( acceptChallenge ) {
-      dispatcher.trigger( 'lobby.accept_challenge', playersData );
+      dispatcher.trigger( 'lobby.accept_challenge', challenger );
     } else {
       return false;
     }

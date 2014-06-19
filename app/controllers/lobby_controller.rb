@@ -20,6 +20,7 @@ class LobbyController < WebsocketRails::BaseController
 
   # When a user accepts a challenge, both players are given a random room ID to join
   def accept_challenge
+    debugger
     challenger = find_lobby_user(data[:challenger])
 
     # Generate a random room from 0 - 999,999
