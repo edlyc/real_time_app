@@ -10,19 +10,9 @@ Player.prototype = {
     this.dispatcher = this.openSocket();
 
     // When the WS is successfully established...
+    // Subscribe to the lobby channel
     this.dispatcher.on_open = function( data ) {
-      // Subscribe to the lobby channel
-      var lobby = new Lobby( instance.dispatcher );
-      instance.lobby = lobby;
-      
-      // Sets 'lobby.username' when user submits their username
-      lobby.bindUsernameForm();
-
-      // Updates everyone's chat messages on form submission
-      lobby.bindChatForm();
-
-      // Challenges a user if you click a username in the lobby's current user list
-      lobby.bindUsernameClick();
+      instance.lobby = new Lobby( instance.dispatcher );
     };
 
   },
