@@ -8,7 +8,14 @@ body {
 }
 
 button {
-  width: 48%;
+  border: none;
+  border-radius: 10px;
+  float: right;
+  font-family: 'pokemon_gbregular';
+  font-size: 12px;
+  height: 90px;
+  margin: 5px;
+  width: 15%;
 }
 
   .container {
@@ -30,9 +37,10 @@ button {
   }
 
   .screen {
+    border: 10px solid black;
     display: block;
+    height: 460px;
     overflow: auto;
-    width: 100%;
   }
 
   .banner {
@@ -92,7 +100,7 @@ button {
 
     img {
       display: block;
-      margin: 80px auto 0 auto;
+      margin: 50px auto 0 auto;
       width: 250px;
     }
 
@@ -102,7 +110,7 @@ button {
 
     img {
       display: block;
-      margin: 40px auto 95px auto;
+      margin: 40px auto 66px auto;
       width: 100px;
     }
 
