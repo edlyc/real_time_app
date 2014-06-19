@@ -11,7 +11,6 @@
   width: 933px;
 }
 
-<<<<<<< HEAD
 .gameboy-screen {
   background-color: gray;
   border-radius: 30px 30px 130px 30px;
@@ -20,6 +19,27 @@
   height: 600px;
   width: 900px;
 }
-=======
 
->>>>>>> lobby_styles
+/* Blinking Dot */
+body { background: #0ff; }
+@-webkit-keyframes 'blink' {
+    0% { background: rgba(255,0,0,1); }
+    50% { background: rgba(255,0,0,0.3); }
+    100% { background: rgba(255,0,0,1); }
+}
+#animate {
+  height: 20px;
+  width: 20px;
+  border-radius: 10px;
+  position: relative;
+  left: 16px;
+  top: 109px;
+}
+.cssanimations #animate {
+  -webkit-animation-direction: normal;
+  -webkit-animation-duration: 2.5s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-name: blink;
+  -webkit-animation-timing-function: ease;
+}
+/* Blinking dot */
