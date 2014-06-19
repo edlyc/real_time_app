@@ -13,7 +13,7 @@
     </div>
     <!-- My Pokemon -->
     <div class="pokemon my-pokemon">
-      <%= image_tag "bulbasaur/bulba_back_resize.gif", class: "animated", id: "my-pokemon-avatar" %>
+      <%= image_tag "bulbasaur_back.gif", class: "animated", id: "my-pokemon-avatar" %>
       <div class="poke-deck"></div>
     </div>
   </div>
@@ -21,7 +21,7 @@
   <div class="stats">
     <!-- Opponent Pokemon -->
     <div class="pokemon their-pokemon">
-      <%= image_tag "bulbasaur/bulba_front_resize.gif", class: "animated", id: "their-pokemon-avatar" %>
+      <%= image_tag "bulbasaur_front.gif", class: "animated", id: "their-pokemon-avatar" %>
       <div class="poke-deck"></div>
     </div>
     <div class="stats-outer their-stats">
@@ -58,6 +58,71 @@
     <%= audio_tag "faint.wav", id: "audio-faint" %>
   </div>
 </div>
+
+<script>
+$(function(){
+  $('.their-pokemon img').css({opacity : 0});
+  $('.my-pokemon img').css({opacity : 0});
+  $('body').append('<div class="selection-screen"></div>');
+  $('.selection-screen').append('<h2>Choose your Pokemon</h2>');
+  pushBigImages('bulbasaur');
+  pushBigImages('charmander');
+  pushBigImages('pikachu');
+  pushBigImages('squirtle');
+});
+
+var pushBigImages = function(pokemon){
+  var $selection = $('.selection-screen');
+  $selection.append('<img id='+ pokemon +' src="/assets/big_' + pokemon + '.png"/>');
+  pokeLogger(pokemon);
+}
+
+var pokeLogger = function(pokemon){
+  $('#' + pokemon).on('click', function(evt){
+    evt.stopPropagation;
+    evt.preventDefault;
+    //Fix this later, since I have no idea what the
+    //websocket is actually doing. Also we need to figure out
+    //how to do the ready function when the pokemon is selected.
+    //you can only choose one pokemon.
+    websocket = new WebSocketRails( location.host + '/websocket');
+    websocket.trigger('game.select_pokemon', this.id);
+    console.log('I am ' + this.id);
+    console.log(websocket);
+    //bounces on selection
+    $('#' + this.id).addClass('animated bounce');
+    //the selection screen fades out after the bounce.
+    $('#' + this.id).one('webkitAnimationEnd mozAnimationEnd', function() {
+      $('.selection-screen').addClass('animated fadeOut');
+    });
+    //the pokemon slides in after the selection screen fades.
+    switch(this.id){
+      case 'pikachu':
+        $('.my-pokemon').html('<%= image_tag("pikachu_back.gif")%>');
+        break;
+      case 'bulbasaur':
+        $('.my-pokemon').html('<%= image_tag("bulbasaur_back.gif")%>');
+        break;
+      case 'charmander':
+        $('.my-pokemon').html('<%= image_tag("charmander_back.gif")%>');
+        break;
+      case 'squirtle':
+        $('.my-pokemon').html('<%= image_tag("squirtle_back.gif")%>');
+        break;
+    }
+
+    $('.selection-screen').one('webkitAnimationEnd mozAnimationEnd', function (){
+      $('.my-pokemon').addClass('animated slideInLeft');
+    });
+
+
+  });
+}
+
+
+</script>
+
+
 <%= javascript_include_tag "fights/battle_view" %>
 <script>
   $(function() {

@@ -34,7 +34,6 @@ class GameController < WebsocketRails::BaseController
     # When the 2nd person joins, start the game
     if game.subscribers.length < 2
       accept_channel
-      set_pokemon
       game.trigger(:start_game) if game.subscribers.length == 2
     else
       deny_channel
@@ -63,9 +62,30 @@ class GameController < WebsocketRails::BaseController
 
   end
 
-  private
-  def set_pokemon
-    bulbasaur = Pokemon.new({ name: "Bulbasaur", max_health: 40, attack_stat: 15 })
-    connection_store[:pokemon] = bulbasaur
+  def select_pokemon
+    pokemon_list =  {
+      bulbasaur: {
+        name: "Bulbasaur",
+        max_health: 70,
+        attack_stat: 15
+      },
+      charmander: {
+        name: "Charmander",
+        max_health: 65,
+        attack_stat: 20
+      },
+      pikachu: {
+        name: "Pikachu",
+        max_health: 40,
+        attack_stat: 32
+      },
+      squirtle: {
+        name: "Squirtle",
+        max_health: 90,
+        attack_stat: 10
+      }
+    }
+    pokemon = Pokemon.new pokemon_list[data.to_sym]
+    connection_store[:pokemon] = pokemon
   end
 end

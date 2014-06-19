@@ -8,6 +8,7 @@ WebsocketRails::EventMap.describe do
   end
 
   namespace :game do
+    subscribe :select_pokemon, "game#select_pokemon"
     subscribe :attack, "game#attack"
     subscribe :receive_damage, "game#receive_damage"
   end

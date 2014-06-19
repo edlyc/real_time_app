@@ -10,6 +10,7 @@ describe "Challenge Users" do
       click_button "Submit"
     end
 
-    it { should have_content "Some Username" }
+    it { should have_content "Some Username" } do
+    end
   end
 end
