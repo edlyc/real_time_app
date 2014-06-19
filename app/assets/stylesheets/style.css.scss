@@ -1,6 +1,13 @@
+html {
+  height: 100%;
+  width: 100%;
+}
+
 body {
-  font-family: 'Source Code Pro';
-  height: auto;
+  background-image: url('http://i.imgur.com/O7ZWigt.png');
+  background-size: zoom;
+  font-family: 'pokemon_gbregular';
+  height: 100%;
   padding: 0;
   margin: 0;
 }
@@ -10,23 +17,16 @@ button {
 }
 
   .container {
-    background: grey;
-    display: block;
     height: 100%;
-    margin: 0 auto;
-    overflow: auto;
-    width: 100%;
   }
 
   .inner {
-    background-color: white;
-    background-size: cover;
+    border: 2px solid black;
     display: block;
-    height: 100%;
-    margin: 0 auto;
-    max-width: 800px;
-    min-height: 500px;
-    padding: 0;
+    margin: 119px 66px 0 auto;
+    max-width: 802px;
+    min-height: 462px;
+    padding-left: 0;
     overflow: hidden;
 
     p {
