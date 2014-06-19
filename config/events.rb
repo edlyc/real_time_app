@@ -4,6 +4,7 @@ WebsocketRails::EventMap.describe do
     subscribe :update_users, "lobby#update_users"
     subscribe :challenge, "lobby#challenge"
     subscribe :accept_challenge, "lobby#accept_challenge"
+    subscribe :unsubscribe, "lobby#delete_user"
   end
 
   namespace :game do

@@ -20,11 +20,10 @@ class LobbyController < WebsocketRails::BaseController
 
   # When a user accepts a challenge, both players are given a random room ID to join
   def accept_challenge
-    debugger
-    challenger = find_lobby_user(data[:challenger])
+    challenger = find_lobby_user data
 
-    # Generate a random room from 0 - 999,999
-    game_id = rand(1_000_000)
+    # Generate a random room from the two player's connection IDs
+    game_id = Digest::SHA256.hexdigest(data + connection.id)
 
     # TODO: Check if game room is empty before sending to players
 
@@ -41,6 +40,7 @@ class LobbyController < WebsocketRails::BaseController
   end
 
   def delete_user
+    WebsocketRails[@@lobby_room].unsubscribe connection
     connection_id = connection.id
     $redis.lrem(@@lobby_users, 0, connection_id)
     update_users

@@ -1,0 +1,23 @@
+<div class="lobby" id="lobby">
+  <div class="lobby-messages">
+     <h5 id="prompt">Please enter a screen name to join!</h5>
+     <ul id="logged_in"></ul>
+
+    <ul class="lobby-list" id="chat"></ul>
+  </div>
+
+  <div class="lobby-users">
+    <p>Current Users</p>
+    <ul class="lobby-list" id="users"></ul>
+  </div>
+
+  <form class="lobby-form" id="user_name" action="#" method="post">
+    <input type="text" id="screen_name" placeholder="screen name">
+    <input type="submit" value="Submit">
+  </form>
+
+  <form hidden class="lobby-form" id="message_text" action="#" method="post">
+    <input type="text" id="message" placeholder="message">
+    <input type="submit" value="Send">
+  </form>
+</div>
