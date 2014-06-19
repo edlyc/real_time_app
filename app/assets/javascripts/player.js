@@ -47,11 +47,8 @@ Player.prototype = {
     this.game.bind( "end_game", function( data ){
       instance.dispatcher.unsubscribe( instance.game.name );
 
-      if ( data.loser === instance.playerID ) {
-        instance.view.myPokemonFaints();
-      } else {
-        instance.view.theirPokemonFaints();
-      }
+      var targetIsSelf = data.loser === instance.playerID;
+      instance.view.pokemonFaints( targetIsSelf );
     });
 
     // Bind attack buttons to send attack messages
