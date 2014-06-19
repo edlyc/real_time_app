@@ -29,10 +29,16 @@ Lobby.prototype = {
     // Tell everyone in the lobby channel to update their view
     this.dispatcher.trigger( 'lobby.update_users' );
 
-    // Listen for chat.message event
+    // Listen for lobby.message event
     // Shows the chat message when someone sends a chat message to the lobby
     this.channel.bind( 'message', function( message ) {
       instance.updateMessages( message );
+    });
+
+    // Listen for challenge event
+    // Opens a challenge dialogue when receiving this event
+    this.dispatcher.bind( 'lobby.challenge', function( challenger ){
+      instance.handleChallenge( challenger );
     });
   },
 
@@ -50,10 +56,12 @@ Lobby.prototype = {
       var date        = new Date( evt.timeStamp );
       var hours       = date.getHours();
       var minutes     = date.getMinutes();
-      var messageTime = hours + ":" + minutes + " | ";
+      var messageTime = hours + ":" + minutes;
 
-      var messageContent = $chatMessageField.val();
-      var message = { timeStamp: messageTime, message: messageContent, username: context.username };
+      // Get message text
+      var messageText = $chatMessageField.val();
+
+      var message = { timeStamp: messageTime, message: messageText, username: context.username };
 
       lobbyChannel.trigger( 'message', message );
       this.reset();
@@ -64,12 +72,13 @@ Lobby.prototype = {
   bindUsernameClick: function() {
     var $users = $( this.elements.users );
     var dispatcher = this.dispatcher;
+    var connectionID = dispatcher._conn.connection_id;
 
     $users.on( 'click', 'li', function() {
-      // Checks if recipient is not challenger
+      // Checks if recipient is not the same connection as the challenger
       var recipientID = $( this ).data( 'user-id' );
-      if ( typeof recipientID === "string" && recipientID !== connID ) {
-        dispatcher.trigger( "chat.challenge", recipientID );
+      if ( typeof recipientID === "string" && recipientID !== connectionID ) {
+        dispatcher.trigger( "lobby.challenge", recipientID );
       }
 
       // TODO: Popup a dialogue to let the user know they're waiting for a response
@@ -109,6 +118,25 @@ Lobby.prototype = {
     });
   },
 
+  // Throw up a dialog if the user is challenged
+  // If the user accepts dialog, send response to server with both player's connection IDs
+  handleChallenge: function( challenger ) {
+    var acceptChallenge = confirm( 'Would you like to challenge?' );
+    var connectionID = this.dispatcher._conn.connection_id;
+
+    var playersData = {
+      challenger: challenger,
+      recipient: connectionID
+    };
+
+    // Send up both player IDs, if the challenge is accepted
+    if ( acceptChallenge ) {
+      dispatcher.trigger( 'lobby.accept_challenge', playersData );
+    } else {
+      return false;
+    }
+  },
+
   // Hide the chat view
   hide: function() {
     $( this.elements.lobby ).hide();
@@ -127,17 +155,26 @@ Lobby.prototype = {
 
     for ( var i = 0; i < currentUsers.length; i++ ) {
       var currentUser = currentUsers[i];
-      $users.append( '<li data-user-id="' + currentUser.id + '">' + currentUser.username + '</li>' );
+
+      // Create the user list element
+      var userEl = $( '<li>' )
+        .append( currentUser.username )
+        .data( 'user-id', currentUser.id );
+
+      $users.append( userEl );
     }
   },
 
   // Updates chat messages
   updateMessages: function( message ) {
-    var messageLine = '<li>' + message.timeStamp + message.username + ':\t' + message.message + '</li>';
+    var messageHeader = [message.timeStamp, message.username].join(' | ');
+    var messageContent = [messageHeader, message.message].join( ':\t' );
+
+    var messageLine = $( '<li>' ).append( messageContent );
     $( this.elements.chatMessages ).append( messageLine );
 
-      // Scrolls chat box to bottom of log on submit
-      var objDiv = document.querySelector( ".chat" );
-      objDiv.scrollTop = objDiv.scrollHeight;
+    // Scrolls chat box to bottom of log on submit
+    var objDiv = document.querySelector( ".chat" );
+    objDiv.scrollTop = objDiv.scrollHeight;
   }
 };

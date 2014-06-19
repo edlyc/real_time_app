@@ -15,12 +15,14 @@ Player.prototype = {
       var lobby = new Lobby( instance.dispatcher );
       instance.lobby = lobby;
       
-      // When user submits their username
-      // Sets 'username' property to the context of the player object instance
-      lobby.bindUsernameForm( instance );
+      // Sets 'lobby.username' when user submits their username
+      lobby.bindUsernameForm();
 
       // Updates everyone's chat messages on form submission
-      instance.lobby.bindChatForm();
+      lobby.bindChatForm();
+
+      // Challenges a user if you click a username in the lobby's current user list
+      lobby.bindUsernameClick();
     };
 
   },
