@@ -2,19 +2,19 @@
 .lobby {
  background: url('gb_display.png') no-repeat;
  background-size: cover;
+ color: #97BB46;
 }
 
 // Lists, e.g. chat history and current users
 .lobby-list {
   list-style-type: none;
   margin: 0;
-  padding: 0;
+  padding: 3px;
 
   li {
-    border-bottom: 1px solid #0F380C;
-    color: #0F380C;
+    color: #97BB46;
     font-weight: 700;
-    margin: 5px 0;
+    margin: 0 0 10px 0;
   }
 
   li:last-child {
@@ -33,11 +33,10 @@
 
 // Chat message pane
 .lobby-messages {
-  border-right: 1px solid black;
-  color: #0F380C;
+  color: #97BB46;
   float: left;
   height: 420px;
-  margin-bottom: 5px;
+  margin-bottom:5px;
   overflow-y: scroll;
   overflow-x: hidden;
   width: 74%;
@@ -45,17 +44,25 @@
 
 // Current user pane
 .lobby-users {
+  border-left: 1px solid #0F380C;
   float: right;
+  height: 459px;
+  max-height: 459px;
+  overflow: scroll;
   text-align: center;
-  width: 25%;
+  width: 25.75%
 }
 
 // Forms, e.g. chat message & screen name selection
 .lobby-form {
   padding: 3px;
 
+  input {
+    font-family: 'pokemon_gbregular';
+  }
+
   input[type='text'] {
     height: 25px;
-    width: 65%;
+    width: 60%;
   }
 }
