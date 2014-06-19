@@ -55,14 +55,20 @@
 
 // Forms, e.g. chat message & screen name selection
 .lobby-form {
-  padding: 3px;
+  padding: 0 5px;
 
   input {
+    border: none;
     font-family: 'pokemon_gbregular';
+    height: 25px;
+    margin: 5px 0 5px -10px;
+    width: 100px
   }
 
   input[type='text'] {
     height: 25px;
+    margin-left: 0;
+    padding: 0 2px;
     width: 60%;
   }
 }
