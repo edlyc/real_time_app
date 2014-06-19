@@ -33,8 +33,8 @@ BattleView.prototype = {
       });
     }
   },
-  pokemonFaints: function( targetIsSelf ) {
-    var prefix = targetIsSelf ? 'my-pokemon' : 'their-pokemon';
+  pokemonFaints: function() {
+    var prefix = this.battleData.targetIsSelf ? 'my-pokemon' : 'their-pokemon';
 
     var $pokemon = $( '#' + prefix + '-avatar' );
     var faintAnimation = prefix + '-faint';
