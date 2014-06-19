@@ -153,18 +153,21 @@ button {
 
 //This is the selection screen CSS for the fight pages.
 .selection-screen{
-  opacity: .9;
   background-color: black;
-  position: fixed;
+  left: 0px;
   height: 100%;
   top: 0px;
-  left: 0px;
+  padding: 5% 8%;
+  position: fixed;
+  opacity: .9;
   width: 100%;
   z-index: 301;
 
   h2 {
     color: white;
     font: Helvetica;
+    margin-right: 11%;
+    margin-bottom: 5%;
     text-align: center;
   }
 
