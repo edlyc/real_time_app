@@ -16,6 +16,7 @@
 * PostgreSQL Database
 * Redis
 
+
 ### User Stories Completed
 
 * As a user I should land on a splash page for the site so that I have some idea of how to get started
@@ -32,7 +33,7 @@
 A full list of user stories can be found by looking at [this Pivotal Tracker Project](https://www.pivotaltracker.com/s/projects/1086732)
 
 ### ERD
-![My ERD(Entity Relationship Diagram)](http://www.gliffy.com/go/publish/image/5786016/L.png)
+![My ERD(Entity Relationship Diagram)](http:/$( '#their-pokemon img' )/www.gliffy.com/go/publish/image/5786016/L.png)
 
 
 
