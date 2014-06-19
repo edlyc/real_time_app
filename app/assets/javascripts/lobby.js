@@ -119,10 +119,12 @@ Lobby.prototype = {
 
         // Broadcast the new user to the lobby
         dispatcher.trigger( 'lobby.new_user', username );
-        
+
         // Replace the user form with the chat form
-        $usernameForm.slideUp();
-        $chatForm.slideDown();
+        $usernameForm.hide();
+        $chatForm.fadeIn();
+        $( '#prompt' ).hide();
+        $( '#logged_in' ).append( '<li>' + 'Logged in as: ' + username + '</li>' );
       }
     });
   },
@@ -179,7 +181,7 @@ Lobby.prototype = {
     $( this.elements.chatMessages ).append( messageLine );
 
     // Scrolls chat box to bottom of log on submit
-    var objDiv = document.querySelector( ".chat" );
+    var objDiv = document.querySelector( ".lobby-messages" );
     objDiv.scrollTop = objDiv.scrollHeight;
   }
 };

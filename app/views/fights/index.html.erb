@@ -1,9 +1,10 @@
 <div class="lobby" id="lobby">
 <%= javascript_include_tag 'fights/chat', 'data-turbolinks-track' => true %>
 
-<div class="lobby">
-
   <div class="lobby-messages">
+     <h5 id="prompt">Please enter a screen name to join!</h5>
+     <ul id="logged_in"></ul>
+
     <ul class="lobby-list" id="chat"></ul>
   </div>
 
