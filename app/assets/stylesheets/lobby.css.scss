@@ -1,3 +1,4 @@
+
 .lobby {
  background: url('gb_display.png') no-repeat;
  background-size: cover;
@@ -19,6 +20,15 @@
   li:last-child {
     border-bottom: none;
   }
+}
+
+#prompt {
+  padding-left: 4px;
+}
+
+#logged_in {
+  list-style-type: none;
+  padding-left: 4px;
 }
 
 // Chat message pane
@@ -46,6 +56,6 @@
 
   input[type='text'] {
     height: 25px;
-    width: 90%;
+    width: 65%;
   }
 }
