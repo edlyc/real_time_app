@@ -1,4 +1,4 @@
-# Pokemon Live
+# Pokemon LIVE!
 [pokemon-live.herokapp.com](http://pokemon-live.herokuapp.com/)
 
 ### GA WDI DC April 2014, Project 1
