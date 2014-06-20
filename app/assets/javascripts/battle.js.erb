@@ -55,7 +55,7 @@ Battle.prototype = {
     this.channel.bind( 'update_game', function( data ) {
       var connectionID = instance.dispatcher._conn.connection_id;
       var targetIsSelf = data.player === connectionID;
-      
+
       instance.updateView({
         targetIsSelf: targetIsSelf,
         health: data.health,
@@ -68,11 +68,11 @@ Battle.prototype = {
     // Check if I lost or the other person lost
     // Faint the appropriate pokemon
     this.channel.bind( 'end_game', function( loser ) {
-      
+
 
       var connectionID = instance.dispatcher._conn.connection_id;
       var targetIsSelf = loser === connectionID;
-      
+
       // Notify if they have won or lost the game.
       if ( targetIsSelf ) {
         alert('You lost!');
@@ -154,7 +154,7 @@ Battle.prototype = {
       $( this ).removeClass( animationType );
     });
   },
-  
+
   // Finds the appropriate audio tag and plays it
   playSound: function( id ) {
     document.getElementById( 'audio-' + id ).play();
