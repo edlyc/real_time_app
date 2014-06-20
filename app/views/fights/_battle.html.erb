@@ -12,7 +12,7 @@
     </div>
     <!-- My Pokemon -->
     <div class="pokemon my-pokemon">
-      <%= image_tag "bulbasaur_back.gif", class: "animated", id: "my-pokemon-avatar" %>
+      <%= image_tag "bulbasaur_back.gif", class: "hidden" %>
       <div class="poke-deck"></div>
     </div>
   </div>
@@ -20,7 +20,7 @@
   <div class="stats">
     <!-- Opponent Pokemon -->
     <div class="pokemon their-pokemon">
-      <%= image_tag "bulbasaur_front.gif", class: "animated", id: "their-pokemon-avatar" %>
+      <%= image_tag "bulbasaur_front.gif", class: "hidden" %>
       <div class="poke-deck"></div>
     </div>
     <div class="stats-outer their-stats">
@@ -57,3 +57,17 @@
     <%= audio_tag "counter.wav", id: "audio-counter" %>
     <%= audio_tag "faint.wav", id: "audio-faint" %>
   </div>
+
+<!-- Preload Pokemon Assets -->
+<div id='pokemon-img-back' style="display: none">
+  <%= image_tag "bulbasaur_back.gif", class: "animated", id: "bulbasaur-back" %>
+  <%= image_tag "charmander_back.gif", class: "animated", id: "charmander-back" %>
+  <%= image_tag "pikachu_back.gif", class: "animated", id: "pikachu-back" %>
+  <%= image_tag "squirtle_back.gif", class: "animated", id: "squirtle-back" %>
+</div>
+<div id='pokemon-img-front' style="display: none">
+<%= image_tag "bulbasaur_front.gif", class: "animated", id: "bulbasaur-front" %>
+<%= image_tag "charmander_front.gif", class: "animated", id: "charmander-front" %>
+<%= image_tag "pikachu_front.gif", class: "animated", id: "pikachu-front" %>
+<%= image_tag "squirtle_front.gif", class: "animated", id: "squirtle-front" %>
+</div>
