@@ -7,16 +7,14 @@
 
 **Pokemon LIVE!** is a real-time application which allows users (trainers) to interact directly with one another in the battle preperation(lobby) area. Trainers can communicate in an open chat format, and challenge one another to duels. These duels take place in the pokemon battlefield and consist of a single-pokemon battle between trainers at random. The
 
-comprehensive wine application designed to allow a user to search for wines, find professional reviews of wines, technical details, price, and even food pairings for wines.  The application will also allow you to locate a store wihtin your vicinity to purchase. wine-oh! was developed by Richard Hessler as the first individual project for the inagural class of the District of Columbia Web Development Immersive course at General Assembly. It was developed over a 5 day sprint and was meant to test what we've learned in the past 5 weeks of class.  This project will continue to be worked on by the sole deleloper, but a branch of the 'finished project' which was presented on May 30, 2014 will remain.
-
 ### Technologies Used
 
 * Ruby 2.1.1
+* Javascript 5
+* WebSocket for Rails
 * Ruby on Rails 4.1.1
 * PostgreSQL Database
-* Authentication & Authorization from scratch using [bcrypt-ruby](http://bcrypt-ruby.rubyforge.org/)
-* [Snooth API](http://api.snooth.com/), [Bootstrap](https://getbootstrap.com/) a sytyling framework incorporating SASS and JavaScript, & [HTTParty](https://github.com/jnunemaker/httparty)
-* Testing using using [rspec-rails](https://github.com/rspec/rspec-rails), [capybara](https://github.com/jnicklas/capybara), [shoulda-matchers](https://github.com/thoughtbot/shoulda-matchers) and [factory_girl_rails](https://github.com/thoughtbot/factory_girl_rails)
+* Redis
 
 ### User Stories Completed
 
