@@ -56,7 +56,7 @@ class GameController < WebsocketRails::BaseController
       max_health: max_health,
       attack_type: data[:attack_type]
     }
-    game.trigger(:update_game, update_data)
+    game.trigger :update_game, update_data
 
     # Send the loser's connection ID, when the game is over
     game.trigger(:end_game, connection.id) if health <= 0
@@ -86,7 +86,20 @@ class GameController < WebsocketRails::BaseController
         attack_stat: 10
       }
     }
-    pokemon = Pokemon.new pokemon_list[data.to_sym]
+
+    game = WebsocketRails[data[:game]]
+
+    pokemon_selection = pokemon_list[data[:pokemon].to_sym]
+    pokemon = Pokemon.new pokemon_selection
+
     connection_store[:pokemon] = pokemon
+
+    # Broadcast pokemon selection to the game
+    selection_data = {
+      player: connection.id,
+      pokemon: data[:pokemon]
+    }
+
+    game.trigger :select_pokemon, selection_data
   end
 end

@@ -13,6 +13,10 @@
   animation-name: fadeOutDown;
 }
 
+.hidden {
+  opacity: 0;
+}
+
 .their-pokemon-faint {
   -webkit-animation-name: rollOut;
   animation-name: rollOut;
