@@ -22,10 +22,10 @@ Player.prototype = {
         // Start a new battle
         instance.battle = new Battle( instance.dispatcher, gameID );
 
-        instance.battle.channel.bind( 'end_game', function() {
-          instance.battle.destroy();
-          instance.lobby.rejoin();
-        });
+        // instance.battle.channel.bind( 'end_game', function() {
+        //   instance.battle.destroy();
+        //   instance.lobby.rejoin();
+        // });
       });
     };
   },
