@@ -1,7 +1,7 @@
-# Pokemon LIVE!
+# Pokemon Live
 [pokemon-live.herokapp.com](http://pokemon-live.herokuapp.com/)
 
-### GA WDI DC April 2014, Project 1
+### GA WDI DC April 2014, Project 2
 
 ### Overview
 
@@ -36,4 +36,4 @@ The application allows users (trainers) to interact directly with one another in
 * As a user my actions are linked to animations
 
 
-###### Developed by [Salil Doshi](https://github.com/4S1D2), [Matt Rundo](http://github/runtropolis)
+###### Developed by [Richard Hessler](https://github.com/richessler), [Inhak Kim](https://github.com/inhakki), [Matt Rundo](http://github/runtropolis), [Elaine Feng](https://github.com/ef718), [Yi-Hsiao Liu](https:://github.com/yihsiaol),  [Salil Doshi](https://github.com/4S1D2)
