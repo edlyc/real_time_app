@@ -32,10 +32,13 @@ Battle.prototype = {
         };
 
         instance.dispatcher.trigger( 'game.select_pokemon', gameData );
-
+        $('#' + pokemon).addClass('animated bounce');
         // Replace the selection screen with the battle view.
-        instance.hideSelectionScreen();
-        instance.showBattle();
+        $('#' + pokemon).one( 'webkitAnimationEnd mozAnimationEnd', function() {
+          instance.hideSelectionScreen();
+          instance.showBattle();
+        });
+
       });
 
     this.channel.bind( 'select_pokemon', function( data ) {
