@@ -9,7 +9,7 @@
 
 The application allows users (trainers) to interact directly with one another in the battle preparation (lobby) area. Trainers can communicate in an open chat format, and challenge one another to battles. These battles take place in the pokémon arena and consist of a single-pokémon battle between trainers at random. Users combine a series of attacks, which deplete the health of their opponent. A winner is decided once a user's health has been depleted. 
 
-Pokeémon LIVE! was developed by Team RIMEYS as a group project for the inaugural class of the District of Columbia Web Development Immersive course at [General Assemb.ly](https://generalassemb.ly/washington-dc). It was developed over a 5 day sprint to model the agile software development process and challenged the abilities which the team accrued over the duration of the course.
+Pokémon LIVE! was developed by Team RIMEYS as a group project for the inaugural class of the District of Columbia Web Development Immersive course at [General Assemb.ly](https://generalassemb.ly/washington-dc). It was developed over a 5 day sprint to model the agile software development process and challenged the abilities which the team accrued over the duration of the course.
 
 ### Technologies Used
 
