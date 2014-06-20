@@ -18,7 +18,7 @@ Player.prototype = {
       instance.dispatcher.bind( 'game.new_game', function( gameID ) {
         // Leave the lobby
         instance.lobby.destroy();
-        
+
         // Start a new battle
         instance.battle = new Battle( instance.dispatcher, gameID );
 
