@@ -10,87 +10,86 @@ Battle.prototype = {
     var instance = this;
 
     this.elements = {
-      battle: $( '#battle' ),       // Battle view
-      attackBtn: $( '.attack' ),    // Attack buttons
-      bgAudio: $( '#audio-battle' ) // Background audio
+      selectionScreen: $( '#selection-screen' ),  // Selection screen
+      battle: $( '#battle' ),                     // Battle view
+      attackBtn: $( '.attack' ),                  // Attack buttons
+      bgAudio: $( '#audio-battle' )               // Background audio
     };
 
     // Show the battle view
-    this.show();
-
-    // Subscribe to a private game channel
-    this.channel = this.dispatcher.subscribe_private( gameID );
-
-    this.channel.bind('game_selection', function( data ){
-      $('.their-pokemon img').css({opacity : 0});
-      $('.my-pokemon img').css({opacity : 0});
-      $('body').append('<div class="selection-screen"></div>');
-      $('.selection-screen').append('<h2>Choose your Pokemon</h2>');
-      pushBigImages('bulbasaur');
-      pushBigImages('charmander');
-      pushBigImages('pikachu');
-      pushBigImages('squirtle');
-    });
-
-    // Play the battle music when the game starts
-    this.channel.bind( 'start_game', function( data ) {
-      instance.playSound( '#battle' );
-    });
-
-    // Bind attack buttons to send attack messages
-    this.elements.attackBtn.on( 'click', function() {
-      var gameName = instance.channel.name;
-      var attackType = $( this ).data( 'attack-type' );
-
-      instance.dispatcher.trigger( 'game.attack', {
-        game: gameName,
-        attack_type: attackType
+    // When the user selects a pokemon
+    // Send an event to the server to set the pokemon they selected
+    this
+      .showSelectionScreen()
+      .on( 'click', '.pokemon-selection', function() {
+        var pokemon = this.id;
+        instance.dispatcher.trigger( 'game.select_pokemon', pokemon );
+        instance.hideSelectionScreen();
+        instance.showBattle();
       });
-    });
 
-    // Listen for damage_dealt event & send message to server to update Pokemon's health
-    this.channel.bind( 'damage_dealt', function( data ) {
-      var connectionID = instance.dispatcher._conn.connection_id;
+    // // Subscribe to a private game channel
+    // // this.channel = this.dispatcher.subscribe_private( gameID );
 
-      if ( data.opponent === connectionID ) {
-        var attackData = {
-          game: instance.channel.name,
-          damage: data.damage,
-          attack_type: data.attack_type
-        };
-        instance.dispatcher.trigger( 'game.receive_damage', attackData );
-      }
-    });
+    // // Play the battle music when the game starts
+    // this.channel.bind( 'start_game', function( data ) {
+    //   instance.playSound( 'battle' );
+    // });
 
-    // Listen for update view event & update pokemon's health in view
-    this.channel.bind( 'update_game', function( data ) {
-      var connectionID = instance.dispatcher._conn.connection_id;
-      var targetIsSelf = data.player === connectionID;
+    // // Bind attack buttons to send attack messages
+    // // this.elements.attackBtn.on( 'click', function() {
+    // //   var gameName = instance.channel.name;
+    // //   var attackType = $( this ).data( 'attack-type' );
 
-      instance.updateView({
-        targetIsSelf: targetIsSelf,
-        health: data.health,
-        maxHealth: data.max_health,
-        attackType: data.attack_type
-      });
-    });
+    // //   instance.dispatcher.trigger( 'game.attack', {
+    // //     game: gameName,
+    // //     attack_type: attackType
+    // //   });
+    // // });
+
+    // // Listen for damage_dealt event & send message to server to update Pokemon's health
+    // this.channel.bind( 'damage_dealt', function( data ) {
+    //   var connectionID = instance.dispatcher._conn.connection_id;
+
+    //   if ( data.opponent === connectionID ) {
+    //     var attackData = {
+    //       game: instance.channel.name,
+    //       damage: data.damage,
+    //       attack_type: data.attack_type
+    //     };
+    //     instance.dispatcher.trigger( 'game.receive_damage', attackData );
+    //   }
+    // });
+
+    // // Listen for update view event & update pokemon's health in view
+    // this.channel.bind( 'update_game', function( data ) {
+    //   var connectionID = instance.dispatcher._conn.connection_id;
+    //   var targetIsSelf = data.player === connectionID;
+
+    //   instance.updateView({
+    //     targetIsSelf: targetIsSelf,
+    //     health: data.health,
+    //     maxHealth: data.max_health,
+    //     attackType: data.attack_type
+    //   });
+    // });
 
 
-    // Check if I lost or the other person lost
-    // Faint the appropriate pokemon
-    this.channel.bind( 'end_game', function( loser ) {
+    // // Check if I lost or the other person lost
+    // // Faint the appropriate pokemon
+    // this.channel.bind( 'end_game', function( loser ) {
 
 
-      var connectionID = instance.dispatcher._conn.connection_id;
-      var targetIsSelf = loser === connectionID;
+    //   var connectionID = instance.dispatcher._conn.connection_id;
+    //   var targetIsSelf = loser === connectionID;
 
-      // Notify if they have won or lost the game.
-      if ( targetIsSelf ) {
-        alert('You lost!');
-      } else {
-        alert('You won!');
-      }
-    });
+    //   // Notify if they have won or lost the game.
+    //   if ( targetIsSelf ) {
+    //     alert('You lost!');
+    //   } else {
+    //     alert('You won!');
+    //   }
+    // });
   },
 
   // Hide the battle view
@@ -106,9 +105,19 @@ Battle.prototype = {
     audio.currentTime = 0;
   },
 
+  // Show the selection screen
+  showSelectionScreen: function() {
+    return $( this.elements.selectionScreen ).show();
+  },
+
+  // Hide the selection screen
+  hideSelectionScreen: function() {
+    return $( this.elements.selectionScreen ).hide();
+  },
+
   // Show the battle view
-  show: function() {
-    $( this.elements.battle ).show();
+  showBattle: function() {
+    return $( this.elements.battle ).show();
   },
 
   updateView: function( data ) {
@@ -169,10 +178,5 @@ Battle.prototype = {
   // Finds the appropriate audio tag and plays it
   playSound: function( id ) {
     document.getElementById( 'audio-' + id ).play();
-  },
-
-  pushBigImages: function(pokemon){
-    var $selection = $('.selection-screen');
-    $selection.append('<img id='+ pokemon +' src="/assets/big_' + pokemon + '.png"/>');
   }
 };
