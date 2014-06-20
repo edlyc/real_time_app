@@ -36,4 +36,4 @@ The application allows users (trainers) to interact directly with one another in
 * As a user my actions are linked to animations
 
 
-###### Developed by [enter github or name](link to github), [Matt Rundo](http://github/runtropolis)
+###### Developed by [Salil Doshi](https://github.com/4S1D2), [Matt Rundo](http://github/runtropolis)
