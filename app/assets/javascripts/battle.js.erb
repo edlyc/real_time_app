@@ -24,72 +24,11 @@ Battle.prototype = {
       .on( 'click', '.pokemon-selection', function() {
         var pokemon = this.id;
         instance.dispatcher.trigger( 'game.select_pokemon', pokemon );
+
+        // Replace the selection screen with the battle view.
         instance.hideSelectionScreen();
-        instance.showBattle();
+        instance.startBattle( gameID );
       });
-
-    // // Subscribe to a private game channel
-    // // this.channel = this.dispatcher.subscribe_private( gameID );
-
-    // // Play the battle music when the game starts
-    // this.channel.bind( 'start_game', function( data ) {
-    //   instance.playSound( 'battle' );
-    // });
-
-    // // Bind attack buttons to send attack messages
-    // // this.elements.attackBtn.on( 'click', function() {
-    // //   var gameName = instance.channel.name;
-    // //   var attackType = $( this ).data( 'attack-type' );
-
-    // //   instance.dispatcher.trigger( 'game.attack', {
-    // //     game: gameName,
-    // //     attack_type: attackType
-    // //   });
-    // // });
-
-    // // Listen for damage_dealt event & send message to server to update Pokemon's health
-    // this.channel.bind( 'damage_dealt', function( data ) {
-    //   var connectionID = instance.dispatcher._conn.connection_id;
-
-    //   if ( data.opponent === connectionID ) {
-    //     var attackData = {
-    //       game: instance.channel.name,
-    //       damage: data.damage,
-    //       attack_type: data.attack_type
-    //     };
-    //     instance.dispatcher.trigger( 'game.receive_damage', attackData );
-    //   }
-    // });
-
-    // // Listen for update view event & update pokemon's health in view
-    // this.channel.bind( 'update_game', function( data ) {
-    //   var connectionID = instance.dispatcher._conn.connection_id;
-    //   var targetIsSelf = data.player === connectionID;
-
-    //   instance.updateView({
-    //     targetIsSelf: targetIsSelf,
-    //     health: data.health,
-    //     maxHealth: data.max_health,
-    //     attackType: data.attack_type
-    //   });
-    // });
-
-
-    // // Check if I lost or the other person lost
-    // // Faint the appropriate pokemon
-    // this.channel.bind( 'end_game', function( loser ) {
-
-
-    //   var connectionID = instance.dispatcher._conn.connection_id;
-    //   var targetIsSelf = loser === connectionID;
-
-    //   // Notify if they have won or lost the game.
-    //   if ( targetIsSelf ) {
-    //     alert('You lost!');
-    //   } else {
-    //     alert('You won!');
-    //   }
-    // });
   },
 
   // Hide the battle view
@@ -115,9 +54,73 @@ Battle.prototype = {
     return $( this.elements.selectionScreen ).hide();
   },
 
-  // Show the battle view
-  showBattle: function() {
-    return $( this.elements.battle ).show();
+  startBattle: function( gameID ) {
+    var instance = this;
+
+    // Show the battle view
+    $( this.elements.battle ).show();
+
+    // Subscribe to a private game channel
+    this.channel = this.dispatcher.subscribe_private( gameID );
+
+    this.channel.on_success = function() {
+      // Play the battle music when the game starts
+      instance.channel.bind( 'start_game', function() {
+        instance.playSound( 'battle' );
+      });
+
+      // Bind attack buttons to send attack messages
+      instance.elements.attackBtn.on( 'click', function() {
+        var attackType = $( this ).data( 'attack-type' );
+
+        instance.dispatcher.trigger( 'game.attack', {
+          game: gameID,
+          attack_type: attackType
+        });
+      });
+
+      // Listen for damage_dealt event & send message to server to update Pokemon's health
+      instance.channel.bind( 'damage_dealt', function( data ) {
+        var connectionID = instance.dispatcher._conn.connection_id;
+
+        if ( data.opponent === connectionID ) {
+          var attackData = {
+            game: instance.channel.name,
+            damage: data.damage,
+            attack_type: data.attack_type
+          };
+          instance.dispatcher.trigger( 'game.receive_damage', attackData );
+        }
+      });
+
+      // Listen for update view event & update pokemon's health in view
+      instance.channel.bind( 'update_game', function( data ) {
+        var connectionID = instance.dispatcher._conn.connection_id;
+        var targetIsSelf = data.player === connectionID;
+
+        instance.updateView({
+          targetIsSelf: targetIsSelf,
+          health: data.health,
+          maxHealth: data.max_health,
+          attackType: data.attack_type
+        });
+      });
+
+      // Check if I lost or the other person lost
+      // Faint the appropriate pokemon
+      instance.channel.bind( 'end_game', function( loser ) {
+
+        var connectionID = instance.dispatcher._conn.connection_id;
+        var targetIsSelf = loser === connectionID;
+
+        // Notify if they have won or lost the game.
+        if ( targetIsSelf ) {
+          alert('You lost!');
+        } else {
+          alert('You won!');
+        }
+      });
+    };
   },
 
   updateView: function( data ) {
