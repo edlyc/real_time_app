@@ -21,9 +21,20 @@ Battle.prototype = {
     // Subscribe to a private game channel
     this.channel = this.dispatcher.subscribe_private( gameID );
 
+    this.channel.bind('game_selection', function( data ){
+      $('.their-pokemon img').css({opacity : 0});
+      $('.my-pokemon img').css({opacity : 0});
+      $('body').append('<div class="selection-screen"></div>');
+      $('.selection-screen').append('<h2>Choose your Pokemon</h2>');
+      pushBigImages('bulbasaur');
+      pushBigImages('charmander');
+      pushBigImages('pikachu');
+      pushBigImages('squirtle');
+    });
+
     // Play the battle music when the game starts
     this.channel.bind( 'start_game', function( data ) {
-      instance.playSound( 'battle' );
+      instance.playSound( '#battle' );
     });
 
     // Bind attack buttons to send attack messages
@@ -158,5 +169,10 @@ Battle.prototype = {
   // Finds the appropriate audio tag and plays it
   playSound: function( id ) {
     document.getElementById( 'audio-' + id ).play();
+  },
+
+  pushBigImages: function(pokemon){
+    var $selection = $('.selection-screen');
+    $selection.append('<img id='+ pokemon +' src="/assets/big_' + pokemon + '.png"/>');
   }
 };

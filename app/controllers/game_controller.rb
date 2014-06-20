@@ -33,6 +33,7 @@ class GameController < WebsocketRails::BaseController
     # Only allow 2 players to join
     # When the 2nd person joins, start the game
     if game.subscribers.length < 2
+      game.trigger(:game_selection)
       select_pokemon
       accept_channel
       game.trigger(:start_game) if game.subscribers.length == 2
@@ -57,7 +58,7 @@ class GameController < WebsocketRails::BaseController
       attack_type: data[:attack_type]
     }
     game.trigger(:update_game, update_data)
-    
+
     # Send the loser's connection ID, when the game is over
     game.trigger(:end_game, connection.id) if health <= 0
 
