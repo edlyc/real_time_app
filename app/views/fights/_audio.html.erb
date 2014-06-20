@@ -1,0 +1,11 @@
+<!-- Media Controls -->
+<div class="banner">
+  <div class="music">
+    <%= audio_tag "#{@song}", controls: true, id: 'audio-battle' %>
+  </div>
+</div>
+<div class="sound-effects">
+  <%= audio_tag "tackle.wav", id: "audio-tackle" %>
+  <%= audio_tag "counter.wav", id: "audio-counter" %>
+  <%= audio_tag "faint.wav", id: "audio-faint" %>
+</div>
