@@ -38,4 +38,4 @@ A full list of user stories can be found by looking at [this Pivotal Tracker Pro
 
 
 ---
-###### Written by Richard Hessler, Inhak Kim, Matt Rundo, Elaine Feng, Yi-Hsiao Liu, and Salil Doshi (Team RIMEYS)
+###### Written by Richard Hessler, Inhak Kim, Matt Rundo, Elaine Fang, Yi-Hsiao Liu, and Salil Doshi (Team RIMEYS)
